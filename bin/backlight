@@ -1,0 +1,35 @@
+#!/bin/zsh
+
+if [[ $# > 2 ]]
+then
+    echo "too many arguments $#"
+    exit
+fi
+
+if [[ $# > 2 ]]
+then
+    if [[ $1 == "up" ]]
+    then
+        sudo light -A $2
+        exit
+    fi
+    if [[ $1 == "down" ]]
+    then
+        sudo light -U $2
+        exit
+    fi
+    echo "invalid argument1:$@"
+    exit
+else
+    if [[ $1 == "up" ]]
+    then
+        sudo light -A 10
+        exit
+    fi
+    if [[ $1 == "down" ]]
+    then
+        sudo light -U 10
+        exit
+    fi
+    echo "invalid argument2: $@"
+fi
