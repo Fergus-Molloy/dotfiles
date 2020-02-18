@@ -57,9 +57,9 @@ padding-right = 2
 module-margin-left = 1
 module-margin-right = 2
 
-font-0 = fixed:pixelsize=10;1
-font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
-font-2 = siji:pixelsize=10;1
+font-0 = fixed:pixelsize=12;1
+font-1 = unifont:fontformat=truetype:size=12:antialias=false;0
+font-2 = siji:pixelsize=12;1
 
 modules-left = i3
 modules-right = memory cpu temperature battery wlan eth date
@@ -212,14 +212,14 @@ format-charging = <animation-charging> <label-charging>
 
 format-discharging = <animation-discharging> <label-discharging>
 
-format-full-prefix = " "
-format-full-prefix-foreground = ${colors.foreground-alt}
+format-full-prefix = "full: "
+format-full-prefix-foreground = #b16286
 
 format-charging-prefix = "chrg: "
-format-charging-prefix-foreground = #B16286
+format-charging-prefix-foreground = #b16286
 
 format-discharging-prefix = "batt: "
-format-discharging-prefix-foreground = #8ec07c
+format-discharging-prefix-foreground = #b16286
 
 ramp-capacity-0 = 
 ramp-capacity-1 = 

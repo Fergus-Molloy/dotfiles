@@ -43,7 +43,7 @@ ZSH_THEME="spaceship"
 # DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
+ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
 # COMPLETION_WAITING_DOTS="true"
@@ -77,15 +77,18 @@ source $ZSH/oh-my-zsh.sh
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
+# Remove the need to type cd to change directory
+setopt autocd
+
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='vim'
+else
+  export EDITOR='nvim'
+fi
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -100,7 +103,23 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias cl=clear
 alias v=nvim
-alias rm="rm -r"
+alias rm="rm -rv"
 alias pik=pikaur
 alias restart-wifi="sudo systemctl restart NetworkManager"
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+alias brightness="xrandr --output eDP-1 --brightness"
+alias sudo="sudo "
+alias s=startx
+alias mkdir="mkdir -p"
+
+# functions
+mkcdir(){
+    mkdir -p -- "$1" &&
+        cd -P -- "$1"
+}
+
+lls(){
+    clear
+    ls
+}
+
