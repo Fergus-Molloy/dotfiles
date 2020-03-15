@@ -335,8 +335,9 @@ set spelllang=en_gb
 " Enable neovim's inccommand feature
 set inccommand=nosplit
 
-" Set spellcheck on for *.tex files
-au FileType tex setlocal spell
+" Set spellcheck on for *.tex and *.md files
+au FileType tex      setlocal spell
+au FileType markdown setlocal spell
 
 " Conceal level 2
 set conceallevel=2

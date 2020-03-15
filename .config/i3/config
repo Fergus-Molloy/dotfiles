@@ -214,7 +214,7 @@ exec_always --no-startup-id feh --bg-scale $HOME/Pictures/bg.jpg
 #Set opacity
 exec_always --no-startup-id $HOME/.config/compton/launch.sh
 
-#Spply undervolt
+#Apply undervolt
 exec_always --no-startup-id intel-undervolt apply
 
 #Open flameshot
@@ -229,6 +229,9 @@ assign [class="spotify"] 9
 exec discord
 exec terminator
 exec google-chrome-stable
+
+#set default brightness
+exec brightness 0.7
 
 #remove title bar
 for_window [class="^.*"] border pixel 0
