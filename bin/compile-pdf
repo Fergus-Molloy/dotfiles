@@ -1,0 +1,44 @@
+#!/bin/sh
+
+red=`tput setaf 1`
+reset=`tput sgr0`
+
+rec(){
+    #recusively find tex files and compile them
+    find -name "*.tex" | while read file;
+        do pdflatex -shell-escape "$file" > /dev/null
+        if [[ $? -eq 0 ]]; then
+            echo "Compiled $file"
+        else
+            echo "${red}Failed to compile $file${reset}"
+        fi; done
+    #perfrom cleanup
+    find -type d -name "_minted*" -delete
+    find -type f -name "*.log" -delete
+    find -type f -name "*.aux" -delete
+}
+
+cwd(){
+    # find all .tex files and compile them
+    for i in *.tex; do
+        # don't want to see the ouput of pdflatex
+        pdflatex -shell-escape $i >/dev/null && echo "Compiled $i" # added so we know what files compiled
+    done
+
+    #perform cleanup of extra files
+    rm *.aux *.log 
+    find . -type d -name "_minted*" -delete
+}
+
+if [[ $# > 0 ]]
+then
+    if [[ $1 == "-r" ]]
+    then
+        rec
+    else
+        echo "option $1 not recoginized"  
+    fi
+else
+    cwd
+fi
+
