@@ -14,6 +14,8 @@ Plug 'mbbill/undotree'                " A nice undo-tree viewer
 Plug 'plasticboy/vim-markdown'        " Markdown support
 Plug 'tpope/vim-fugitive'             " Git integration
 Plug 'tpope/vim-surround'             " Surround text with arbitrary characters
+Plug 'kamykn/popup-menu.nvim'         " Needed for spelunker
+Plug 'kamykn/spelunker.vim'           " Better spell checker
 call plug#end()
 
 
@@ -85,11 +87,11 @@ set showmatch
 set lbr
 set tw=500
 
-"configure spell checking
-set spelllang=en_gb
-au FileType tex setlocal spell
-au FileType markdown setlocal spell
-
+" Set spell checking for tex and md files
+set nospell
+augroup spelunker
+    autocmd CursorHold *.tex *.md call spelunker#check_displayed_words()
+augroup END
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Key Remaps
@@ -98,6 +100,10 @@ let mapleader=" "
 
 " Remove highlighting from previous search
 nmap <leader><space> :noh<cr>
+
+" add mappings to quickly capitalise and un-capitalise single letters
+nmap <leader>U vU
+nmap <leader>u vu
 
 " Remap ctrl-f to exit insert mode
 imap <c-f> <esc>
@@ -108,10 +114,18 @@ nmap <c-m-k> mz:m-2<cr>`z
 vmap <c-m-j> :m'>+<cr>`<my`>mzgv`yo`z
 vmap <c-m-k> :m'<-2<cr>`>my`<mzgv`yo`z
 
-nmap <leader>ss z=
-nmap <leader>sg zg
-nmap <leader>sr :spellr<cr>
-
+" configure spelling shortcuts
+"replace with first suggestion
+nmap <leader>sf Zf 
+" type replacement
+nmap <leader>sc Zc "
+" give drop down menu
+nmap <leader>ss Zl
+" add word to dictionary
+nmap <leader>sg Zg
+" navigation
+nmap [s ZP
+nmap ]s ZN
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugin configuration
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -281,4 +295,24 @@ let g:Tex_IgnoredWarnings =
             \'Citation %.%# undefined'."\n".
             \'Double space found.'."\n"
 let g:Tex_IgnoreLevel = 8
+
+" Configure spelunker
+"enable spelunker
+let g:enable_spelunker_vim = 1
+
+" Check spelling for words longer than set characters. (default: 4)
+let g:spelunker_target_min_char_len = 1
+
+" Max amount of word suggestions. (default: 15)
+let g:spelunker_max_suggest_words = 10
+
+" Max amount of highlighted words in buffer. (default: 100)
+let g:spelunker_max_hi_words_each_buf = 1000
+
+" Spellcheck type: (default: 1)
+" 1: File is checked for spelling mistakes when opening and saving. This
+" may take a bit of time on large files.
+" 2: Spellcheck displayed words in buffer. Fast and dynamic. The waiting time
+" depends on the setting of CursorHold `set updatetime=1000`.
+let g:spelunker_check_type = 2
 
