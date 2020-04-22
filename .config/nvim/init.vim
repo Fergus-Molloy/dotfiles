@@ -46,7 +46,7 @@ set smarttab
 set smartindent
 
 " line numbers are essential
-set nu
+set nu rnu
 
 " makes it easy to see what line i'm on
 set cursorline
@@ -75,7 +75,7 @@ set colorcolumn=87
 highlight ColorColumn ctermbg=0 guibg=lightgrey
 
 "let me see lines around the cursor
-set so=7
+set so=10
 
 " Return to last edit position when opening files
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
@@ -116,11 +116,13 @@ vmap <c-m-k> :m'<-2<cr>`>my`<mzgv`yo`z
 
 " configure spelling shortcuts
 "replace with first suggestion
-nmap <leader>sf Zf 
+nmap <leader>sf Zl<cr>
 " type replacement
-nmap <leader>sc Zc "
+nmap <leader>sc Zc
+nmap <leader>SC ZC
 " give drop down menu
-nmap <leader>ss Zl
+nnoremap <leader>ss Zl
+nnoremap <leader> SS ZL
 " add word to dictionary
 nmap <leader>sg Zg
 " navigation
@@ -136,7 +138,7 @@ set hidden
 set cmdheight=1
 
 " You will have bad experience for diagnostic messages when it's default 4000.
-set updatetime=300
+set updatetime=100
 
 " don't give |ins-completion-menu| messages.
 set shortmess+=c
