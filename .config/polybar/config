@@ -18,12 +18,12 @@
 
 [colors]
 ;background = ${xrdb:color0:#222}
-background = #000
-background-alt = #222
+background = #ffff
+background-alt = #ffff
 ;foreground = ${xrdb:color7:#222}
 ;white
 foreground = #dfdfdf
-foreground-alt = #555
+foreground-alt = #fff
 ;yellow
 primary = #ffb52a
 ;pink
@@ -43,10 +43,10 @@ fixed-center = false
 background = ${colors.background}
 foreground = ${colors.foreground}
 
-separator = "|"
+separator = " "
 
 line-size = 3
-line-color = #f00
+line-color = #cc241d
 
 border-size = 4
 border-color = #00000000
@@ -60,9 +60,10 @@ module-margin-right = 2
 font-0 = fixed:pixelsize=12;1
 font-1 = unifont:fontformat=truetype:size=12:antialias=false;0
 font-2 = siji:pixelsize=12;1
-
+font-3 = unifont upper=12
 modules-left = i3
-modules-right = memory cpu temperature battery wlan eth date
+modules-right = temperature battery wlan date
+;modules-right = memory cpu temperature battery wlan eth date
 
 tray-position = right
 tray-padding = 2
@@ -117,7 +118,7 @@ label-focused-padding = 2
 
 ; unfocused = Inactive workspace on any monitor
 label-unfocused = %index%
-label-unfocused-padding = 2
+label-unfocused-padding = 1
 
 ; visible = Active workspace on unfocused monitor
 label-visible = %index%
@@ -128,7 +129,7 @@ label-visible-padding = ${self.label-focused-padding}
 ; urgent = Workspace with urgency hint set
 label-urgent = %index%
 label-urgent-background = ${colors.alert}
-label-urgent-padding = 2
+label-urgent-padding = 1
 
 ; Separator in between workspaces
 ; label-separator = |
@@ -138,14 +139,14 @@ label-urgent-padding = 2
 type = internal/cpu
 interval = 2
 format-prefix = "util: "
-format-prefix-foreground = #fb4934
+format-prefix-foreground = #689d6a
 label = %percentage:2%%
 
 [module/memory]
 type = internal/memory
 interval = 2
 format-prefix = "mem: "
-format-prefix-foreground = #8AE234
+format-prefix-foreground = #cc241d
 label = %percentage_used%%
 
 [module/wlan]
@@ -205,37 +206,28 @@ battery = BAT0
 adapter = AC
 full-at = 98
 
-
-
-
 format-charging = <animation-charging> <label-charging>
 
 format-discharging = <animation-discharging> <label-discharging>
 
-format-full-prefix = "full: "
-format-full-prefix-foreground = #b16286
-
-format-charging-prefix = "chrg: "
-format-charging-prefix-foreground = #b16286
-
-format-discharging-prefix = "batt: "
-format-discharging-prefix-foreground = #b16286
+format-full-prefix = " "
+format-full-prefix-foreground = #555
 
 ramp-capacity-0 = 
 ramp-capacity-1 = 
 ramp-capacity-2 = 
-ramp-capacity-foreground = ${colors.foreground-alt}
+ramp-capacity-foreground = #555
 
 animation-charging-0 = 
 animation-charging-1 = 
 animation-charging-2 = 
-animation-charging-foreground = ${colors.foreground-alt}
+animation-charging-foreground = #555
 animation-charging-framerate = 750
 
 animation-discharging-0 = 
 animation-discharging-1 = 
 animation-discharging-2 = 
-animation-discharging-foreground = ${colors.foreground-alt}
+animation-discharging-foreground = #555
 animation-discharging-framerate = 750
 
 [module/temperature]
@@ -246,8 +238,8 @@ warn-temperature = 60
 format = <ramp> <label>
 format-warn = <ramp> <label-warn>
 
-format-prefix="temp: "
-format-prefix-foreground = #458588
+format-prefix="🌡"
+format-prefix-foreground = #b8bb26
 
 label = %temperature-c%
 label-warn = %temperature-c%
