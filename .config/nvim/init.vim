@@ -76,7 +76,7 @@ highlight ColorColumn ctermbg=0 guibg=lightgrey
 
 "let me see lines around the cursor
 set so=10
-
+set scrolloff=10
 " Return to last edit position when opening files
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
@@ -93,14 +93,20 @@ augroup spelunker
     autocmd CursorHold *.tex *.md call spelunker#check_displayed_words()
 augroup END
 
+" disable folding for md files
+autocmd FileType markdown setlocal nofoldenable
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Key Remaps
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 let mapleader=" "
 
+" Keep cursor in the middle of the screen
+nnoremap j jzz
+nnoremap k kzz
+
 " Remove highlighting from previous search
 nmap <leader><space> :noh<cr>
-
 " add mappings to quickly capitalise and un-capitalise single letters
 nmap <leader>U vU
 nmap <leader>u vu
@@ -121,10 +127,12 @@ nmap <leader>sf Zl<cr>
 nmap <leader>sc Zc
 nmap <leader>SC ZC
 " give drop down menu
-nnoremap <leader>ss Zl
-nnoremap <leader> SS ZL
+nmap <leader>ss Zl
+nmap <leader> SS ZL
 " add word to dictionary
 nmap <leader>sg Zg
+" remove word from dictionary
+nmap <leader>sr :!delete_word <cword><cr>
 " navigation
 nmap [s ZP
 nmap ]s ZN
