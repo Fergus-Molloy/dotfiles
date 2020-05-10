@@ -9,7 +9,6 @@ Plug 'preservim/nerdtree'             " Browse files within vim
 Plug 'lervag/vimtex'                  " LaTeX support
 Plug 'Townk/vim-autoclose'            " Automatically close ( { [ etc
 Plug 'Chiel92/vim-autoformat'         " Autoformatter
-Plug 'lervag/vimtex'                  " LaTeX support
 Plug 'mbbill/undotree'                " A nice undo-tree viewer
 Plug 'plasticboy/vim-markdown'        " Markdown support
 Plug 'tpope/vim-fugitive'             " Git integration
@@ -70,6 +69,9 @@ set nowritebackup
 set undodir=~/.undo
 set undofile
 
+" auto ave if buffer ahd been updated
+autocmd CursorHold * update
+
 "highlight the 88th column because that's how wide this window normally is
 set colorcolumn=87
 highlight ColorColumn ctermbg=0 guibg=lightgrey
@@ -85,7 +87,7 @@ set showmatch
 
 " automatically line break
 set lbr
-set tw=500
+set tw=200
 
 " Set spell checking for tex and md files
 set nospell
@@ -104,6 +106,11 @@ let mapleader=" "
 " Keep cursor in the middle of the screen
 nnoremap j jzz
 nnoremap k kzz
+
+inoremap <c-k> <bs>
+inoremap <c-l> ,
+
+nmap <leader>w :w<cr>
 
 " Remove highlighting from previous search
 nmap <leader><space> :noh<cr>
@@ -128,7 +135,7 @@ nmap <leader>sc Zc
 nmap <leader>SC ZC
 " give drop down menu
 nmap <leader>ss Zl
-nmap <leader> SS ZL
+nmap <leader>SS ZL
 " add word to dictionary
 nmap <leader>sg Zg
 " remove word from dictionary
@@ -136,7 +143,11 @@ nmap <leader>sr :!delete_word <cword><cr>
 " navigation
 nmap [s ZP
 nmap ]s ZN
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"get word count for latex file
+nmap <F3> :w !detex \| wc -w<CR>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugin configuration
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 " if hidden is not set, TextEdit might fail.
@@ -146,7 +157,7 @@ set hidden
 set cmdheight=1
 
 " You will have bad experience for diagnostic messages when it's default 4000.
-set updatetime=100
+set updatetime=300
 
 " don't give |ins-completion-menu| messages.
 set shortmess+=c
@@ -154,6 +165,8 @@ set shortmess+=c
 " always show signcolumns
 set signcolumn=yes
 
+
+vnoremap <tab> <Plug>(coc-snippets-select)
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
 inoremap <silent><expr> <TAB>
@@ -288,13 +301,27 @@ let g:vimtex_compiler_latexmk = {
             \ 'continuous' : 1,
             \ 'executable' : 'latexmk',
             \ 'options' : [
+            \   '-pdf',
+            \   '-shell-escape',
             \   '-verbose',
             \   '-file-line-error',
             \   '-synctex=1',
             \   '-interaction=nonstopmode',
-            \   '-shell-escape',
             \ ],
             \}
+let g:vimtex_sytax_minted = [
+            \ {
+            \ 'lang' : 'c',
+            \ },
+            \ {
+            \ 'lang' : 'cpp',
+            \ 'environments' : ['cppcode', 'cppcode_test'],
+            \ },
+            \ {
+            \ 'lang' : 'python',
+            \ 'ignore' : ['pythonEscape', 'pythonBEscape'],
+            \ }
+            \ ]
 let g:Tex_IgnoredWarnings =
             \'Underfull'."\n".
             \'Overfull'."\n".
@@ -305,7 +332,8 @@ let g:Tex_IgnoredWarnings =
             \'Citation %.%# undefined'."\n".
             \'Double space found.'."\n"
 let g:Tex_IgnoreLevel = 8
-
+let g:vimtex_quickfix_open_on_warning = 0
+"let g:vimtex_quickfix_autoclose_after_keystrokes=1
 " Configure spelunker
 "enable spelunker
 let g:enable_spelunker_vim = 1
