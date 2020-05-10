@@ -39,34 +39,32 @@ def find_files(inp: str):
     return(files)
 
 def create_folder(folder: str):
-        if not os.path.exists(folder):
-            process = subprocess.run(["mkdir", "-p", folder])
-            log("mkdir {}".format(folder))
-            if process.returncode != 0:
-                log(f"{Fore.RED}directory could not be made{Style.RESET_ALL}", True)
-                quit()
+    rm=open("/dev/null", 'w')
+    if not os.path.exists(folder):
+        process = subprocess.run(["mkdir", "-p", folder], stdout=rm)
+        log("mkdir {}".format(folder))
+        if process.returncode != 0:
+            log(f"{Fore.RED}directory could not be made{Style.RESET_ALL}", True)
+            quit()
 
 def move_files(files):
     folder = "compiledpdfs"
+    rm=open("/dev/null", 'w')
     if args.output == None:
         create_folder("compiledpdfs")
     else:
         create_folder(args.output)
         folder=args.output
     for File in files:
-        subprocess.run(["mv", "{}.pdf".format(get_file_name(File)), folder])
+        subprocess.run(["mv", "{}.pdf".format(get_file_name(File)), folder], stdout=rm)
         log("mv {}.pdf {}".format(get_file_name(File), folder))
 
 def remove_files(file: str):
     rm=open("/dev/null", 'w')
-    subprocess.run(["rm", "{}.log".format(get_file_name(file))], stdout=rm, stderr=subprocess.STDOUT)
-    log("rm {}.log".format(get_file_name(file)))
-    subprocess.run(["rm", "{}.aux".format(get_file_name(file))], stdout=rm, stderr=subprocess.STDOUT)
-    log("rm {}.aux".format(get_file_name(file)))
-    subprocess.run(["rm", "{}.toc".format(get_file_name(file))], stdout=rm, stderr=subprocess.STDOUT)
-    log("rm {}.toc".format(get_file_name(file)))
-    subprocess.run(["rm", "{}.out".format(get_file_name(file))], stdout=rm, stderr=subprocess.STDOUT)
-    log("rm {}.out".format(get_file_name(file)))
+    subprocess.run(["latexmk", "-c"], stdout=rm, stderr=subprocess.STDOUT)
+    log("latexmk -c")
+    subprocess.run(["rm", "{}.synctex.gz".format(get_file_name(file))], stdout=rm, stderr=subprocess.STDOUT)
+    log("rm {}.synctex.gz".format(get_file_name(file)))
     subprocess.run(["rm", "-r", "_minted-{}".format(get_file_name(file))], stdout=rm, stderr=subprocess.STDOUT)
     log("rm -r _minted-{}".format(get_file_name(file)))
 
@@ -88,13 +86,8 @@ def compilepdfs(files):
         if File[:2-len(File)] == "./":
             File = File[2:] #remove the ./ before files that appears when run recursively
         with open(File, 'r') as f:
-            if "\\tableofcontents" in f.read():
-                # need to compile twice for table of contents
-                subprocess.run(["pdflatex", "-shell-escape", File], stdout=rm)
-                process = subprocess.run(["pdflatex", "-shell-escape", File], stdout=rm)
-            else:
-                process = subprocess.run(["pdflatex", "-shell-escape", File], stdout=rm)
-                
+            process = subprocess.run(["latexmk", "-lualatex", "-synctex=1", "-shell-escape", File], stdout=rm, stderr=subprocess.STDOUT)
+            log("latexmk -lualatex -synctex=1 -shell-escape {}".format(File))
         if process.returncode != 0:
             log(f"{Fore.RED}Failed to compile {File}{Style.RESET_ALL}", True)
         else:
