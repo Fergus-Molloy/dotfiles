@@ -206,11 +206,11 @@ battery = BAT0
 adapter = AC
 full-at = 98
 
-format-charging = <animation-charging> <label-charging>
+format-charging = ↑ <label-charging>
 
-format-discharging = <animation-discharging> <label-discharging>
+format-discharging = ↓ <label-discharging>
 
-format-full-prefix = " "
+format-full-prefix = "ƒ"
 format-full-prefix-foreground = #555
 
 ramp-capacity-0 = 

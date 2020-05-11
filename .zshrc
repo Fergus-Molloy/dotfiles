@@ -1,9 +1,13 @@
 # If you come from bash you might have to change your $PATH.
-export PATH=$HOME/bin:$PATH
-
+#export PATH=$HOME/bin:$PATH
+export TERMINAL="terminator"
+export TERM="terminator"
 # Path to your oh-my-zsh installation.
 export ZSH="/home/fergus/.oh-my-zsh"
-
+# Add user bin to PATH
+export PATH="/home/fergus/bin:$PATH"
+# Add installs for this user to path
+export PATH="/home/fergus/.local/bin:$PATH"
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
@@ -79,7 +83,6 @@ source $ZSH/oh-my-zsh.sh
 
 # Remove the need to type cd to change directory
 setopt autocd
-
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
 
@@ -111,7 +114,11 @@ alias brightness="xrandr --output eDP-1 --brightness"
 alias sudo="sudo "
 alias s=startx
 alias mkdir="mkdir -p"
-
+alias volume=pulsemixer
+alias :q="exit"
+alias grep=rg
+alias latexmk="latexmk -lualatex -synctex=1 -shell-escape"
+alias ls="exa -lha -s=name --git --group-directories-first"
 # functions
 mkcdir(){
     mkdir -p -- "$1" &&

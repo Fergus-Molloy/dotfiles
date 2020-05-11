@@ -1,0 +1,8 @@
+#!/bin/bash
+if xrandr | grep -q "HDMI-1 disconnected"; then
+    echo "No HDMI connected"
+else
+    xrandr --output "eDP-1" --off --output "HDMI-1" --mode 2560x1440 --rate 75
+    feh --bg-scale $HOME/Pictures/2560x1440.png
+    setxkbmap gb
+fi

@@ -301,7 +301,7 @@ let g:vimtex_compiler_latexmk = {
             \ 'continuous' : 1,
             \ 'executable' : 'latexmk',
             \ 'options' : [
-            \   '-pdf',
+            \   '-lualatex',
             \   '-shell-escape',
             \   '-verbose',
             \   '-file-line-error',
