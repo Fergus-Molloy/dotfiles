@@ -2,6 +2,7 @@
 #export PATH=$HOME/bin:$PATH
 export TERMINAL="terminator"
 export TERM="terminator"
+export GIT="git@github.com:Fergus-Molloy"
 # Path to your oh-my-zsh installation.
 export ZSH="/home/fergus/.oh-my-zsh"
 # Add user bin to PATH
@@ -118,7 +119,7 @@ alias volume=pulsemixer
 alias :q="exit"
 alias grep=rg
 alias latexmk="latexmk -lualatex -synctex=1 -shell-escape"
-alias ls="exa -lha -s=name --git --group-directories-first"
+alias ls="exa -lh -s=name --git --group-directories-first --no-permissions --no-user"
 # functions
 mkcdir(){
     mkdir -p -- "$1" &&
