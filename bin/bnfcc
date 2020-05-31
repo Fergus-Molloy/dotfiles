@@ -1,0 +1,25 @@
+#!/bin/bash
+if [ $# -lt 1 ] 
+then
+    echo "no file given"
+    exit
+else
+    if [ $# -ge 2 ]
+    then
+        echo "too many arguments, $# given, 1 expected"
+        exit
+    else
+        cd $PWD
+        mkdir -p generated_files
+        mv $@ ./generated_files
+        cd ./generated_files
+        bnfc -m $@ && make && make clean
+        mv ./$@ ../
+        rm *.hs
+        mv Test* ../
+        rm *
+        cd ..
+        rm -r generated_files
+    fi
+fi
+

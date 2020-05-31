@@ -35,7 +35,7 @@ syntax on
 set noerrorbells
 
 "configure tabs
-set tabstop=4 
+set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 set expandtab
@@ -89,11 +89,6 @@ set showmatch
 set lbr
 set tw=200
 
-" Set spell checking for tex and md files
-set nospell
-augroup spelunker
-    autocmd CursorHold *.tex *.md call spelunker#check_displayed_words()
-augroup END
 
 " disable folding for md files
 autocmd FileType markdown setlocal nofoldenable
@@ -170,14 +165,14 @@ vnoremap <tab> <Plug>(coc-snippets-select)
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
 inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
+            \ pumvisible() ? "\<C-n>" :
+            \ <SID>check_back_space() ? "\<TAB>" :
+            \ coc#refresh()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
 " Use <c-space> to trigger completion.
@@ -201,11 +196,11 @@ nmap <silent> gr <Plug>(coc-references)
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
 function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
+    if (index(['vim','help'], &filetype) >= 0)
+        execute 'h '.expand('<cword>')
+    else
+        call CocAction('doHover')
+    endif
 endfunction
 
 " Highlight symbol under cursor on CursorHold
@@ -219,11 +214,11 @@ xmap <leader>f  <Plug>(coc-format-selected)
 nmap <leader>f  <Plug>(coc-format-selected)
 
 augroup mygroup
-  autocmd!
-  " Setup formatexpr specified filetype(s).
-  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
-  " Update signature help on jump placeholder
-  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+    autocmd!
+    " Setup formatexpr specified filetype(s).
+    autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+    " Update signature help on jump placeholder
+    autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 augroup end
 
 " Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
@@ -289,6 +284,8 @@ let g:vim_markdown_strikethrough = 1
 autocmd FileType tex let b:autoformat_autoindent=0
 au BufWrite *.c,*.h,*.hpp,*.cpp,*.tex :Autoformat
 
+
+
 """ Vimtex
 let g:vimtex_compiler_progname = 'nvr'
 let g:tex_flavor = 'latex'
@@ -334,8 +331,9 @@ let g:Tex_IgnoredWarnings =
 let g:Tex_IgnoreLevel = 8
 let g:vimtex_quickfix_open_on_warning = 0
 "let g:vimtex_quickfix_autoclose_after_keystrokes=1
+
 " Configure spelunker
-"enable spelunker
+" enable spelunker
 let g:enable_spelunker_vim = 1
 
 " Check spelling for words longer than set characters. (default: 4)
@@ -353,4 +351,12 @@ let g:spelunker_max_hi_words_each_buf = 1000
 " 2: Spellcheck displayed words in buffer. Fast and dynamic. The waiting time
 " depends on the setting of CursorHold `set updatetime=1000`.
 let g:spelunker_check_type = 2
+" Disable default autogroup. (default: 0)
+let g:spelunker_disable_auto_group = 1
 
+" Create own custom autogroup to enable spelunker.vim for specific filetypes.
+set nospell
+augroup spelunker
+"  autocmd FileType *.tex, *.md call spelunker#check()
+"  autocmd CursorHold *.tex, *.md call spelunker#check_displayed_words()
+augroup END

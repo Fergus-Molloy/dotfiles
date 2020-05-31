@@ -147,7 +147,7 @@ endsnippet
 #endsnippet
 
 #context "isNotMath()"
-snippet -> "right arrow" iA
+snippet -> "right arrow" i
 $\rightarrow$$0
 endsnippet
 
@@ -202,9 +202,9 @@ $0
 \end{tabular}
 endsnippet
 
-snippet A* "format A* properly" iA
-A$^*$
-endsnippet
+#snippet A* "format A* properly" iA
+#A$^*$
+#endsnippet
 
 snippet f-value "format f-value correctly" wA
 $f$-value
@@ -217,4 +217,22 @@ endsnippet
 snippet inp "inport code file" b
 \inputminted{$1}{$2}
 $0
+endsnippet
+
+snippet ; "Description" i
+;$1[$2,$3]$0
+endsnippet
+
+snippet box "Insert a box" b
+\boxed{
+$0
+}
+endsnippet
+
+snippet mbox "Insert matrix box" b
+\boxed{
+\begin{matrix}
+$0
+\end{matrix}
+}
 endsnippet

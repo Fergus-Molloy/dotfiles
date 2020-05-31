@@ -7,6 +7,8 @@ export GIT="git@github.com:Fergus-Molloy"
 export ZSH="/home/fergus/.oh-my-zsh"
 # Add user bin to PATH
 export PATH="/home/fergus/bin:$PATH"
+# Add packages installed by cabal to path
+export PATH="/home/fergus/.cabal/bin:$PATH"
 # Add installs for this user to path
 export PATH="/home/fergus/.local/bin:$PATH"
 # Set name of the theme to load --- if set to "random", it will
@@ -120,6 +122,8 @@ alias :q="exit"
 alias grep=rg
 alias latexmk="latexmk -lualatex -synctex=1 -shell-escape"
 alias ls="exa -lh -s=name --git --group-directories-first --no-permissions --no-user"
+alias lsg="exa -lh -s=name --git --group-directories-first --no-permissions --no-user --git-ignore"
+alias google-chrome=google-chrome-stable
 # functions
 mkcdir(){
     mkdir -p -- "$1" &&
