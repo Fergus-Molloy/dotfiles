@@ -121,9 +121,14 @@ alias volume=pulsemixer
 alias :q="exit"
 alias grep=rg
 alias latexmk="latexmk -lualatex -synctex=1 -shell-escape"
+alias google-chrome=google-chrome-stable
+# better ls
 alias ls="exa -lh -s=name --git --group-directories-first --no-permissions --no-user"
 alias lsg="exa -lh -s=name --git --group-directories-first --no-permissions --no-user --git-ignore"
-alias google-chrome=google-chrome-stable
+# cargo stuff
+alias cc="cargo check"
+alias cr="cargo run"
+alias cb="cargo build"
 # functions
 mkcdir(){
     mkdir -p -- "$1" &&
@@ -135,3 +140,7 @@ lls(){
     ls
 }
 
+cn(){
+    cargo new -- "$1" &&
+        cd -P -- "$1"
+}
