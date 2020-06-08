@@ -7,7 +7,6 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'morhetz/gruvbox'    " Theme so vim doesn't look like ass
 Plug 'preservim/nerdtree'             " Browse files within vim
 Plug 'lervag/vimtex'                  " LaTeX support
-Plug 'Townk/vim-autoclose'            " Automatically close ( { [ etc
 Plug 'Chiel92/vim-autoformat'         " Autoformatter
 Plug 'mbbill/undotree'                " A nice undo-tree viewer
 Plug 'plasticboy/vim-markdown'        " Markdown support
@@ -98,17 +97,32 @@ autocmd FileType markdown setlocal nofoldenable
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 let mapleader=" "
 
+" open vim config
+nnoremap <leader>vc :edit ~/.config/nvim/init.vim<cr>
+" source vim config (reload settings)
+nnoremap <leader>vs :so ~/.config/nvim/init.vim<cr>
+
+"open .zshrc
+nnoremap <leader>vz:edit ~/.zshrc<cr>
+
 " Keep cursor in the middle of the screen
 nnoremap j jzz
 nnoremap k kzz
 
-inoremap <c-k> <bs>
-inoremap <c-l> ,
+map <F2> :NERDTreeToggle<CR>
 
-nmap <leader>w :w<cr>
+" quickly save and exit
+nnoremap <leader>w :w<cr>
+nnoremap <leader>q :q<cr>
+
+" move between buffers
+nnoremap <leader>n :bn<cr>
+nnoremap <leader>N :bp<cr>
+
 
 " Remove highlighting from previous search
 nmap <leader><space> :noh<cr>
+"
 " add mappings to quickly capitalise and un-capitalise single letters
 nmap <leader>U vU
 nmap <leader>u vu
@@ -142,6 +156,23 @@ nmap ]s ZN
 "get word count for latex file
 nmap <F3> :w !detex \| wc -w<CR>
 
+" run current file
+nmap <leader>t :term<cr>a
+
+" insert semi colon
+nnoremap <leader>; mzA;<esc>`z:delmarks z<cr>
+
+" some useful navigation stuff
+nnoremap <leader>ll A<esc>
+nnoremap <leader>hh I<esc>
+nnoremap <leader>l <c-w>l
+nnoremap <leader>h <c-w>h
+
+" create splits
+nnoremap vs :vsplit<cr><c-w>l
+nnoremap bs :split<cr><c-w>j
+
+nnoremap <leader>e :edit<space>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugin configuration
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -228,7 +259,7 @@ nmap <leader>a  <Plug>(coc-codeaction-selected)
 " Remap for do codeAction of current line
 nmap <leader>ac  <Plug>(coc-codeaction)
 " Fix autofix problem of current line
-nmap <leader>qf  <Plug>(coc-fix-current)
+nmap <leader>fc  <Plug>(coc-fix-current)
 
 " Use <tab> for select selections ranges, needs server support, like: coc-tsserver, coc-python
 nmap <silent> <TAB> <Plug>(coc-range-select)
@@ -251,22 +282,22 @@ set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 " Show all diagnostics
 nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
 " Manage extensions
-nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
+"nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
 " Show commands
-nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
+"nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
 " Find symbol of current document
 nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
 " Search workspace symbols
-nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
+"nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
 " Do default action for next item.
-nnoremap <silent> <space>j  :<C-u>CocNext<CR>
+"nnoremap <silent> <space>j  :<C-u>CocNext<CR>
 " Do default action for previous item.
-nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
+"nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
-nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+"nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
 " Snippet "next" keybind
-let g:coc_snippet_next = '<tab>'
+let g:coc_snippet_next = '<s-tab>'
 
 "Make <nab> and <s-tab> work like in vscode
 inoremap <silent><expr> <tab>
@@ -357,6 +388,11 @@ let g:spelunker_disable_auto_group = 1
 " Create own custom autogroup to enable spelunker.vim for specific filetypes.
 set nospell
 augroup spelunker
-"  autocmd FileType *.tex, *.md call spelunker#check()
+    autocmd!
+    autocmd FileType *.tex, *.md call spelunker#check()
 "  autocmd CursorHold *.tex, *.md call spelunker#check_displayed_words()
 augroup END
+
+
+" configure gtfo vim
+let g:gtfo#terminals = { 'unix': 'terminator -cd' }
