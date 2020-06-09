@@ -1,0 +1,55 @@
+" gruvbox color scheme for vifm
+" color scheme can be found at https://github.com/morhetz/gruvbox
+
+" background colours
+"Bg = 235
+"Bg1 = 237
+"Bg2 = 239
+"Bg0s = 236
+"Fg = 223
+"Gray = 245
+"LightGray = 246
+"Red = 124
+"LightRed = 167
+"Green = 106
+"LightGreen = 142
+"Yellow = 172
+"LightYellow = 214
+"Blue = 66
+"LightBlue = 189
+"Purple = 132
+"LightPurple = 175
+"Aqua = 72
+"LightAqua = 108
+"Orange = 166
+"LightOrange = 288
+
+
+" Reset all styles first
+highlight clear
+
+highlight Border	    cterm=none	        ctermfg=235	        ctermbg=default
+
+highlight TopLine	    cterm=none	        ctermfg=214	        ctermbg=235
+highlight TopLineSel	cterm=bold	        ctermfg=214	        ctermbg=237
+
+highlight Win		    cterm=none	        ctermfg=223	        ctermbg=default
+"highlight OtherWin     cterm=none	        ctermfg=223	        ctermbg=236
+highlight Directory	    cterm=bold	        ctermfg=106	        ctermbg=default
+highlight CurrLine	    cterm=bold,inverse	ctermfg=default	    ctermbg=default
+highlight OtherLine	    cterm=bold	        ctermfg=default	    ctermbg=235
+highlight Selected	    cterm=none	        ctermfg=223	        ctermbg=237
+
+highlight JobLine	    cterm=bold	        ctermfg=72	        ctermbg=239
+highlight StatusLine	cterm=bold	        ctermfg=142	        ctermbg=236
+highlight ErrorMsg	    cterm=bold	        ctermfg=167	        ctermbg=default
+highlight WildMenu	    cterm=bold	        ctermfg=235	        ctermbg=142
+highlight CmdLine	    cterm=none	        ctermfg=223	        ctermbg=default
+
+highlight Executable	cterm=bold	        ctermfg=142	        ctermbg=default
+highlight Link		    cterm=none	        ctermfg=132	        ctermbg=default
+highlight BrokenLink	cterm=bold	        ctermfg=167	        ctermbg=default
+highlight Device	    cterm=none,standout	ctermfg=214	        ctermbg=default
+highlight Fifo		    cterm=none	        ctermfg=172	        ctermbg=default
+highlight Socket	    cterm=bold	        ctermfg=223	        ctermbg=default
+
