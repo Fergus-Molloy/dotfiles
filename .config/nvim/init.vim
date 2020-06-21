@@ -4,16 +4,22 @@
 
 call plug#begin()
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'morhetz/gruvbox'    " Theme so vim doesn't look like ass
-Plug 'preservim/nerdtree'             " Browse files within vim
-Plug 'lervag/vimtex'                  " LaTeX support
-Plug 'Chiel92/vim-autoformat'         " Autoformatter
-Plug 'mbbill/undotree'                " A nice undo-tree viewer
-Plug 'plasticboy/vim-markdown'        " Markdown support
-Plug 'tpope/vim-fugitive'             " Git integration
-Plug 'tpope/vim-surround'             " Surround text with arbitrary characters
-Plug 'kamykn/popup-menu.nvim'         " Needed for spelunker
-Plug 'kamykn/spelunker.vim'           " Better spell checker
+Plug 'morhetz/gruvbox'                  " Theme so vim doesn't look bad
+Plug 'preservim/nerdtree'               " Browse files within vim
+Plug 'lervag/vimtex'                    " LaTeX support
+Plug 'Chiel92/vim-autoformat'           " Autoformatter
+Plug 'mbbill/undotree'                  " A nice undo-tree viewer
+Plug 'plasticboy/vim-markdown'          " Markdown support
+Plug 'tpope/vim-fugitive'               " Git integration
+Plug 'tpope/vim-surround'               " Surround text with arbitrary characters
+Plug 'kamykn/popup-menu.nvim'           " Needed for spelunker
+Plug 'kamykn/spelunker.vim'             " Better spell checker
+Plug 'cespare/vim-toml'                 " toml syntax highlighting
+Plug 'rust-lang/rust.vim'               " add some support for rust
+Plug 'Plug majutsushi/tagbar'           " used for navigating tags
+Plug 'vim-airline/vim-airline'          " better command line
+Plug 'vim-airline/vim-airline-themes'   " pretty airline
+Plug 'majutsushi/tagbar'                " for tag naviagtion
 call plug#end()
 
 
@@ -71,13 +77,14 @@ set undofile
 " auto ave if buffer ahd been updated
 autocmd CursorHold * update
 
-"highlight the 88th column because that's how wide this window normally is
-set colorcolumn=87
-highlight ColorColumn ctermbg=0 guibg=lightgrey
+" recievedhighlight the 88th column because that's how wide this window normally is
+"set colorcolumn=87
+"highlight ColorColumn ctermbg=0 guibg=lightgrey
 
 "let me see lines around the cursor
 set so=10
 set scrolloff=10
+
 " Return to last edit position when opening files
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
@@ -88,9 +95,14 @@ set showmatch
 set lbr
 set tw=200
 
+" set fold to use indents
+set foldmethod=indent
 
-" disable folding for md files
-autocmd FileType markdown setlocal nofoldenable
+" set folds to always be open when a file is opened
+set foldlevel=50
+
+" enable tags in rust files
+autocmd BufRead *.rs :setlocal tags=./rusty-tags.vi;/,$RUST_SRC_PATH/rusty-tags.vi
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Key Remaps
@@ -106,19 +118,20 @@ nnoremap <leader>vs :so ~/.config/nvim/init.vim<cr>
 nnoremap <leader>vz:edit ~/.zshrc<cr>
 
 " Keep cursor in the middle of the screen
-nnoremap j jzz
-nnoremap k kzz
+"nnoremap j jzz
+"nnoremap k kzz
+nnoremap E ea
 
 map <F2> :NERDTreeToggle<CR>
 
 " quickly save and exit
 nnoremap <leader>w :w<cr>
 nnoremap <leader>q :q<cr>
+nnoremap <leader>z :wq<cr>
 
 " move between buffers
 nnoremap <leader>n :bn<cr>
 nnoremap <leader>N :bp<cr>
-
 
 " Remove highlighting from previous search
 nmap <leader><space> :noh<cr>
@@ -157,22 +170,39 @@ nmap ]s ZN
 nmap <F3> :w !detex \| wc -w<CR>
 
 " run current file
-nmap <leader>t :term<cr>a
+nmap <leader>te :term<cr>a
 
 " insert semi colon
 nnoremap <leader>; mzA;<esc>`z:delmarks z<cr>
+nnoremap <leader>, mzA,<esc>`z:delmarks z<cr>
 
 " some useful navigation stuff
 nnoremap <leader>ll A<esc>
 nnoremap <leader>hh I<esc>
 nnoremap <leader>l <c-w>l
 nnoremap <leader>h <c-w>h
+nnoremap <leader>j <c-w>j
+nnoremap <leader>k <c-w>k
 
 " create splits
-nnoremap vs :vsplit<cr><c-w>l
-nnoremap bs :split<cr><c-w>j
+nnoremap <leader>sv :vsplit<cr><c-w>l
+nnoremap <leader>sh :split<cr><c-w>j
+"nnoremap <leader>wo <c-w>o
 
 nnoremap <leader>e :edit<space>
+
+nnoremap <leader>tt :TagbarToggle<cr>
+
+nnoremap <leader>ff :call Flip()<cr>
+function! Flip()
+    let char = matchstr(getline('.'), '\%' . col('.') . 'c.')
+    if char == "<"
+        call feedkeys("\s>\<ESC>")
+    elseif char == ">"
+        call feedkeys("\s<\<ESC>")
+    endif
+endfunction
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugin configuration
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -297,7 +327,7 @@ nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
 "nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
 " Snippet "next" keybind
-let g:coc_snippet_next = '<s-tab>'
+let g:coc_snippet_next = '<tab>'
 
 "Make <nab> and <s-tab> work like in vscode
 inoremap <silent><expr> <tab>
@@ -393,6 +423,10 @@ augroup spelunker
 "  autocmd CursorHold *.tex, *.md call spelunker#check_displayed_words()
 augroup END
 
-
 " configure gtfo vim
 let g:gtfo#terminals = { 'unix': 'terminator -cd' }
+
+" airline theme
+let g:airline_theme='base16_gruvbox_dark_hard'
+let g:airline_powerline_fonts = 1
+let g:airline_extensions =['tagbar']

@@ -11,9 +11,15 @@ export PATH="/home/fergus/bin:$PATH"
 
 # Add packages installed by cabal to path
 export PATH="/home/fergus/.cabal/bin:$PATH"
+#
+# Add cargo packages to path
+export PATH="/home/fergus/.cargo/bin:$PATH"
 
 # Add installs for this user to path
 export PATH="/home/fergus/.local/bin:$PATH"
+
+# Configure tags for rust
+export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src/"
 
 # Set theme
 #ZSH_THEME="spaceship"
@@ -52,7 +58,7 @@ source $ZSH/oh-my-zsh.sh
 
 # Remove the need to type cd to change directory
 setopt autocd
-
+KEYTIMEOUT=1
 # enable vi mode
 bindkey -v
 
@@ -103,11 +109,11 @@ alias google-chrome=firefox
 alias ls="exa -lh -s=name --git --group-directories-first --no-permissions --no-user"
 alias lsg="exa -lh -s=name --git --group-directories-first --no-permissions --no-user --git-ignore"
 # cargo stuff
-alias cc="cargo check"
-alias cr="cargo run"
-alias ct="cargo test"
-alias cb="cargo build"
-alias cbr="cargo build --release"
+alias cc="cargo-root check"
+alias cr="cargo-root run"
+alias ct="cargo-root test"
+alias cb="cargo-root build"
+alias cbr="cargo-root build --release"
 
 # functions
 mkcdir(){

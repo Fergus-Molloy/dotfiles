@@ -33,7 +33,7 @@ set trash
 set trashdir="~/.local/share/Trash"
 
 " disable confirmation when deleting files
-set confirm-=delete
+set confirm-=delete,permdelete
 
 " This is how many directories to store in the directory history.
 
@@ -64,7 +64,7 @@ set vimhelp
 " If you would like to run an executable file when you
 " press return on the file name set this.
 
-set norunexec
+set runexec
 
 " Selected color scheme
 
@@ -126,6 +126,7 @@ mark h ~/
 mark d ~/Documents
 mark D ~/Downloads
 mark r ~/Documents/learnrust
+mark t ~/.local/share/Trash
 " ------------------------------------------------------------------------------
 
 " :com[mand][!] command_name action
@@ -139,7 +140,7 @@ mark r ~/Documents/learnrust
 " %d the current directory name.
 " %D the other window directory name.
 " %m run the command in a menu window
-
+command! du du -sh %c %m
 command! df df -h %m 2> /dev/null
 command! diff vim -d %f %F
 command! zip zip -r %f.zip %f
@@ -149,7 +150,6 @@ command! mkcd :mkdir %a | cd %a
 command! vgrep vim "+grep %a"
 command! reload :write | restart
 command! new touch %a
-command! v nvim %a
 
 " ------------------------------------------------------------------------------
 
@@ -394,7 +394,7 @@ set vifminfo=dhistory,savedirs,chistory,state,tui,shistory,
 
 " Customize view columns a bit (enable ellipsis for truncated file names)
 "
-set viewcolumns=-7%{},-93%{name}..
+set viewcolumns=-12%{},-88%{name}..
 
 " Filter-out build and temporary files
 "
@@ -486,11 +486,13 @@ nnoremap <f8> :delete<cr>
 " User key binds
 
 " easy creation of new things
-nnoremap mf :new<space>
-nnoremap md :mkdir<space>
-nnoremap mc :mkcd <space>
-nnoremap mn :v<space>
-nnoremap mr :!cargo new<space>
+nnoremap nf :new<space>
+nnoremap nd :mkdir<space>
+nnoremap nc :mkcd<space>
+nnoremap nn :edit
+nnoremap NN editC
+nnoremap nr :!cargo new<space>
+command! editC edit %c
 
 " edit vimrc
 nnoremap vc :write | edit ~/.config/nvim/init.vim <cr>
@@ -500,3 +502,10 @@ only
 nnoremap w :vsplit<cr>:view<cr>
 nnoremap W :view<cr><c-w>o
 vnoremap w :view<cr>gv
+
+nnoremap <space>q :q<cr>
+command! dp :!cd %c | p | :!cd ..
+
+nnoremap P lph
+
+nnoremap du :du<cr>
