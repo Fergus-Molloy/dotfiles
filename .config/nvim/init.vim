@@ -15,11 +15,11 @@ Plug 'tpope/vim-surround'               " Surround text with arbitrary character
 Plug 'kamykn/popup-menu.nvim'           " Needed for spelunker
 Plug 'kamykn/spelunker.vim'             " Better spell checker
 Plug 'cespare/vim-toml'                 " toml syntax highlighting
-Plug 'rust-lang/rust.vim'               " add some support for rust
-Plug 'Plug majutsushi/tagbar'           " used for navigating tags
-Plug 'vim-airline/vim-airline'          " better command line
-Plug 'vim-airline/vim-airline-themes'   " pretty airline
-Plug 'majutsushi/tagbar'                " for tag naviagtion
+Plug 'rust-lang/rust.vim'               " Rust support
+Plug 'Plug majutsushi/tagbar'           " Used for navigating tags
+Plug 'vim-airline/vim-airline'          " Better status line
+Plug 'vim-airline/vim-airline-themes'   " Pretty airline
+Plug 'majutsushi/tagbar'                " For tag naviagtion
 call plug#end()
 
 
@@ -27,38 +27,40 @@ call plug#end()
 " Basic configuration
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-"configure colorscheme
+" Configure colorscheme
 set t_Co=256
 let gruvbox_italic=1
 colorscheme gruvbox
 set background=dark
 
-" turn syntax highlighting on
+" Turn syntax highlighting on
 syntax on
 
-" no annoying bells
+" No annoying bells
 set noerrorbells
 
-"configure tabs
+" Configure tabs
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 set expandtab
 set smarttab
 
-" indent for me please
+" Indent for me please
 set smartindent
 
-" line numbers are essential
+" Line numbers
+" current line has actual line number
+" other lines are relative
 set nu rnu
 
-" makes it easy to see what line i'm on
+" Makes it easy to see what line i'm on
 set cursorline
 
-" autoread when an external command is run
+" Autoread when an external command is run
 set autoread
 
-" i want to be able to see everything
+" I want to be able to see everything
 set wrap
 
 " be smart when searching
@@ -67,76 +69,72 @@ set smartcase
 set incsearch
 set hlsearch
 
-"remove backups and store an undo file
+" Remove backups and store an undo file
 set noswapfile
 set nobackup
 set nowritebackup
 set undodir=~/.undo
 set undofile
 
-" auto ave if buffer ahd been updated
+" auto save if buffer ahd been updated
 autocmd CursorHold * update
 
-" recievedhighlight the 88th column because that's how wide this window normally is
-"set colorcolumn=87
-"highlight ColorColumn ctermbg=0 guibg=lightgrey
-
-"let me see lines around the cursor
-set so=10
+" Let me see lines around the cursor
 set scrolloff=10
 
 " Return to last edit position when opening files
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
-" highlight matching brackets
+" Highlight matching brackets
 set showmatch
 
-" automatically line break
+" Automatically line break at 200 characters
 set lbr
 set tw=200
 
-" set fold to use indents
+" Set fold to use indents
 set foldmethod=indent
 
-" set folds to always be open when a file is opened
+" Set folds to always be open when a file is opened
 set foldlevel=50
 
-" enable tags in rust files
+" Enable tags in rust files
 autocmd BufRead *.rs :setlocal tags=./rusty-tags.vi;/,$RUST_SRC_PATH/rusty-tags.vi
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Key Remaps
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Set leader key to <space>
 let mapleader=" "
 
-" open vim config
+" Open vim config
 nnoremap <leader>vc :edit ~/.config/nvim/init.vim<cr>
-" source vim config (reload settings)
+
+" Source vim config (reload settings)
 nnoremap <leader>vs :so ~/.config/nvim/init.vim<cr>
 
-"open .zshrc
+" Open .zshrc
 nnoremap <leader>vz:edit ~/.zshrc<cr>
 
-" Keep cursor in the middle of the screen
-"nnoremap j jzz
-"nnoremap k kzz
+" Go into insert mode at end of word
 nnoremap E ea
 
+" Toggle file viewer
 map <F2> :NERDTreeToggle<CR>
 
-" quickly save and exit
+" Quickly save and exit
 nnoremap <leader>w :w<cr>
 nnoremap <leader>q :q<cr>
 nnoremap <leader>z :wq<cr>
 
-" move between buffers
+" Move between buffers
 nnoremap <leader>n :bn<cr>
 nnoremap <leader>N :bp<cr>
 
 " Remove highlighting from previous search
 nmap <leader><space> :noh<cr>
-"
-" add mappings to quickly capitalise and un-capitalise single letters
+
+" Add mappings to quickly capitalise and un-capitalise single letters
 nmap <leader>U vU
 nmap <leader>u vu
 
@@ -149,36 +147,44 @@ nmap <c-m-k> mz:m-2<cr>`z
 vmap <c-m-j> :m'>+<cr>`<my`>mzgv`yo`z
 vmap <c-m-k> :m'<-2<cr>`>my`<mzgv`yo`z
 
-" configure spelling shortcuts
-"replace with first suggestion
+" Spelling shortcuts
+" Replace with first suggestion
 nmap <leader>sf Zl<cr>
-" type replacement
+
+" Type replacement
 nmap <leader>sc Zc
 nmap <leader>SC ZC
-" give drop down menu
+
+" Give drop down menu
 nmap <leader>ss Zl
 nmap <leader>SS ZL
-" add word to dictionary
+
+" Add word to dictionary
 nmap <leader>sg Zg
-" remove word from dictionary
+
+" Remove word from dictionary
 nmap <leader>sr :!delete_word <cword><cr>
-" navigation
+
+" Next spelling error
 nmap [s ZP
+" Previous spelling error
 nmap ]s ZN
 
-"get word count for latex file
+" Get word count for latex file
 nmap <F3> :w !detex \| wc -w<CR>
 
-" run current file
+" Run terminal in current file location
 nmap <leader>te :term<cr>a
 
-" insert semi colon
+" Insert semi colon at end of line
 nnoremap <leader>; mzA;<esc>`z:delmarks z<cr>
-nnoremap <leader>, mzA,<esc>`z:delmarks z<cr>
 
-" some useful navigation stuff
+" Some useful navigation stuff
+" Jump to end or start of line but not in insert mode
 nnoremap <leader>ll A<esc>
 nnoremap <leader>hh I<esc>
+
+" Swap between splits
 nnoremap <leader>l <c-w>l
 nnoremap <leader>h <c-w>h
 nnoremap <leader>j <c-w>j
@@ -187,12 +193,14 @@ nnoremap <leader>k <c-w>k
 " create splits
 nnoremap <leader>sv :vsplit<cr><c-w>l
 nnoremap <leader>sh :split<cr><c-w>j
-"nnoremap <leader>wo <c-w>o
 
+" open new buffer to edit
 nnoremap <leader>e :edit<space>
 
+" Toggle tagbar navigation
 nnoremap <leader>tt :TagbarToggle<cr>
 
+" flip direction of < or >
 nnoremap <leader>ff :call Flip()<cr>
 function! Flip()
     let char = matchstr(getline('.'), '\%' . col('.') . 'c.')
@@ -220,7 +228,6 @@ set shortmess+=c
 
 " always show signcolumns
 set signcolumn=yes
-
 
 vnoremap <tab> <Plug>(coc-snippets-select)
 " Use tab for trigger completion with characters ahead and navigate.
@@ -337,17 +344,15 @@ inoremap <silent><expr> <tab>
             \ coc#refresh()
 inoremap <expr> <s-tab> pumvisible() ? "\<c-p>" : "\<s-tab>"
 
-""" Vim-markdown
+""" Vim-markdown ------------------------------------------------------------
 let g:vim_markdown_math = 1
 let g:vim_markdown_strikethrough = 1
 
-" Autoformat on write
+" Autoformat on write ------------------------------------------------------------
 autocmd FileType tex let b:autoformat_autoindent=0
 au BufWrite *.c,*.h,*.hpp,*.cpp,*.tex :Autoformat
 
-
-
-""" Vimtex
+""" Vimtex ------------------------------------------------------------
 let g:vimtex_compiler_progname = 'nvr'
 let g:tex_flavor = 'latex'
 let g:vimtex_view_method = 'zathura'
@@ -393,7 +398,7 @@ let g:Tex_IgnoreLevel = 8
 let g:vimtex_quickfix_open_on_warning = 0
 "let g:vimtex_quickfix_autoclose_after_keystrokes=1
 
-" Configure spelunker
+" Configure spelunker ------------------------------------------------------------
 " enable spelunker
 let g:enable_spelunker_vim = 1
 
@@ -423,10 +428,7 @@ augroup spelunker
 "  autocmd CursorHold *.tex, *.md call spelunker#check_displayed_words()
 augroup END
 
-" configure gtfo vim
-let g:gtfo#terminals = { 'unix': 'terminator -cd' }
-
-" airline theme
+" airline theme ------------------------------------------------------------
 let g:airline_theme='base16_gruvbox_dark_hard'
 let g:airline_powerline_fonts = 1
 let g:airline_extensions =['tagbar']
