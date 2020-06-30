@@ -1,0 +1,13 @@
+#!/bin/bash
+
+lock=$(upfind -name "Cargo.lock" -print -quit)
+
+if [ -z $lock ] ; then
+    echo "not a crate"
+else
+    cur=$PWD
+    cd $(dirname lock)
+    cargo $@
+    cd $cur
+fi
+    

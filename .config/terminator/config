@@ -1,8 +1,73 @@
 [global_config]
   borderless = True
-  title_font = Sans 12
   title_use_system_font = False
+  title_font = Sans 12
 [keybindings]
+  close_term = <Primary><Shift>w
+  help = None
+[profiles]
+  [[default]]
+    background_color = "#282828"
+    background_darkness = 0.94
+    background_type = transparent
+    cursor_color = "#aaaaaa"
+    font = Source Code Variable Semi-Bold 12
+    foreground_color = "#ebdbb2"
+    show_titlebar = False
+    scrollbar_position = hidden
+    scrollback_infinite = True
+    use_system_font = False
+  [[spotify-tui]]
+    background_color = "#282828"
+    background_darkness = 0.94
+    background_type = transparent
+    cursor_color = "#aaaaaa"
+    font = Source Code Variable Semi-Bold 12
+    foreground_color = "#ebdbb2"
+    show_titlebar = False
+    scrollbar_position = hidden
+    scrollback_infinite = True
+    exit_action = hold
+    use_custom_command = True
+    custom_command = spt
+    use_system_font = False
+  [[vis]]
+    background_color = "#282828"
+    background_darkness = 0.0
+    background_type = transparent
+    cursor_color = "#aaaaaa"
+    font = Source Code Variable Semi-Bold 10
+    foreground_color = "#ebdbb2"
+    show_titlebar = False
+    scrollbar_position = hidden
+    scrollback_infinite = True
+    use_custom_command = True
+    custom_command = vis
+    use_system_font = False
+  [[vifm]]
+    background_color = "#282828"
+    background_darkness = 0.94
+    background_type = transparent
+    cursor_color = "#aaaaaa"
+    font = Source Code Variable Semi-Bold 12
+    foreground_color = "#ebdbb2"
+    show_titlebar = False
+    scrollbar_position = hidden
+    scrollback_infinite = True
+    use_custom_command = True
+    custom_command = vifm
+    use_system_font = False
+  [[hold]]
+    background_color = "#282828"
+    background_darkness = 0.94
+    background_type = transparent
+    cursor_color = "#aaaaaa"
+    font = Source Code Pro Semi-Bold 12
+    foreground_color = "#ebdbb2"
+    show_titlebar = False
+    scrollbar_position = hidden
+    scrollback_infinite = True
+    use_system_font = False
 [layouts]
   [[default]]
     [[[child1]]]
@@ -49,38 +114,3 @@
       type = Terminal
       uuid = 1d997c99-d251-4516-b515-9d879c7afb7a
 [plugins]
-[profiles]
-  [[default]]
-    background_color = "#282828"
-    background_darkness = 0.94
-    background_type = transparent
-    cursor_color = "#aaaaaa"
-    font = Source Code Variable Semi-Bold 12
-    foreground_color = "#ebdbb2"
-    scrollbar_position = hidden
-    show_titlebar = False
-    use_system_font = False
-  [[spotify-tui]]
-    background_color = "#282828"
-    background_darkness = 0.94
-    background_type = transparent
-    cursor_color = "#aaaaaa"
-    custom_command = spt
-    font = Source Code Variable Semi-Bold 12
-    foreground_color = "#ebdbb2"
-    scrollbar_position = hidden
-    show_titlebar = False
-    use_custom_command = True
-    use_system_font = False
-  [[vis]]
-    background_color = "#282828"
-    background_darkness = 0.0
-    background_type = transparent
-    cursor_color = "#aaaaaa"
-    custom_command = vis
-    font = Source Code Variable Semi-Bold 10
-    foreground_color = "#ebdbb2"
-    scrollbar_position = hidden
-    show_titlebar = False
-    use_custom_command = True
-    use_system_font = False

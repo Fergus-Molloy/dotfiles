@@ -1,4 +1,5 @@
-{"languageserver": {
+{
+"languageserver": {
     "ccls": {
       "command": "ccls",
       "filetypes": ["c", "cpp", "objc", "objcpp"],
@@ -9,4 +10,7 @@
          }
        }
     }
-  }}
+  },
+"coc.preferences.formatOnSaveFiletypes": ["rust"]
+}
+

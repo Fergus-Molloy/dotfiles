@@ -399,34 +399,38 @@ let g:vimtex_quickfix_open_on_warning = 0
 "let g:vimtex_quickfix_autoclose_after_keystrokes=1
 
 " Configure spelunker ------------------------------------------------------------
+" disable vim's spell checker
+set nospell
+
 " enable spelunker
 let g:enable_spelunker_vim = 1
 
 " Check spelling for words longer than set characters. (default: 4)
-let g:spelunker_target_min_char_len = 1
+let g:spelunker_target_min_char_len = 4
 
 " Max amount of word suggestions. (default: 15)
-let g:spelunker_max_suggest_words = 10
+let g:spelunker_max_suggest_words = 15
 
 " Max amount of highlighted words in buffer. (default: 100)
-let g:spelunker_max_hi_words_each_buf = 1000
+let g:spelunker_max_hi_words_each_buf = 100
 
 " Spellcheck type: (default: 1)
 " 1: File is checked for spelling mistakes when opening and saving. This
 " may take a bit of time on large files.
 " 2: Spellcheck displayed words in buffer. Fast and dynamic. The waiting time
 " depends on the setting of CursorHold `set updatetime=1000`.
-let g:spelunker_check_type = 2
-" Disable default autogroup. (default: 0)
-let g:spelunker_disable_auto_group = 1
+let g:spelunker_check_type = 1
 
-" Create own custom autogroup to enable spelunker.vim for specific filetypes.
-set nospell
-augroup spelunker
-    autocmd!
-    autocmd FileType *.tex, *.md call spelunker#check()
-"  autocmd CursorHold *.tex, *.md call spelunker#check_displayed_words()
-augroup END
+" Disable default autogroup. (default: 0)
+let g:spelunker_disable_auto_group = 0
+
+" Override highlight group name of incorrectly spelled words. (default:
+" 'SpelunkerSpellBad')
+let g:spelunker_spell_bad_group = 'SpelunkerSpellBad'
+
+" Override highlight group name of complex or compound words. (default:
+" 'SpelunkerComplexOrCompoundWord')
+let g:spelunker_complex_or_compound_word_group = 'SpelunkerComplexOrCompoundWord'
 
 " airline theme ------------------------------------------------------------
 let g:airline_theme='base16_gruvbox_dark_hard'

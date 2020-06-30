@@ -1,0 +1,72 @@
+# A valid snippet should starts with:
+#
+#		snippet trigger_word [ "description" [ options ] ]
+#
+# and end with:
+#
+#		endsnippet
+#
+# Snippet options:
+#
+#		b - Beginning of line.
+#		i - In-word expansion.
+#		w - Word boundary.
+#		r - Regular expression
+#		e - Custom context snippet
+#		A - Snippet will be triggered automatically, when condition matches.
+#
+# Basic example:
+#
+#		snippet emitter "emitter properties" b
+#		private readonly ${1} = new Emitter<$2>()
+#		public readonly ${1/^_(.*)/$1/}: Event<$2> = this.$1.event
+#		endsnippet
+#
+# Online reference: https://github.com/SirVer/ultisnips/blob/master/doc/UltiSnips.txt
+
+snippet fn "New function" w
+fn ${1:function_name}(${2:arguments})${3: -> ${4:return}} {
+	$0
+}
+endsnippet
+
+snippet vec "vector" w
+Vec<$1>$0
+endsnippet
+
+snippet print "insert print macro" w
+println!("${1:String}",$2);$0
+endsnippet
+
+snippet let "Insert new variable" b
+let ${1:var}${2:: ${3:type}} = $4;$0
+endsnippet
+
+snippet panic "Insert panic macro" w
+panic!("${1:String}",$2);$0
+endsnippet
+
+snippet res "Insert result" w
+Result<${1:Ok}, ${2:Err}>$0
+endsnippet
+
+snippet test "Make test function" b
+#[test]
+fn $1() {
+	$0
+}
+endsnippet
+
+snippet assert "Insert assert macro" b
+assert!()
+endsnippet
+
+snippet asserteq "Insert assert_eq macro" b
+assert_eq!($1, $2);$0
+endsnippet
+
+snippet thread "insert new thread" w
+thread::spawn(move |${1:args}| {
+	$0
+});
+endsnippet

@@ -499,9 +499,8 @@ nnoremap vc :write | edit ~/.config/nvim/init.vim <cr>
 only
 
 " edit preview for one pane
-nnoremap w :vsplit<cr>:view<cr>
+nnoremap w :vsplit<cr>:view<cr><c-w>l<c-w>50_<c-w>h
 nnoremap W :view<cr><c-w>o
-vnoremap w :view<cr>gv
 
 nnoremap <space>q :q<cr>
 command! dp :!cd %c | p | :!cd ..
