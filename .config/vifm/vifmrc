@@ -489,8 +489,8 @@ nnoremap <f8> :delete<cr>
 nnoremap nf :new<space>
 nnoremap nd :mkdir<space>
 nnoremap nc :mkcd<space>
-nnoremap nn :edit
-nnoremap NN editC
+nnoremap nn :edit<space>
+nnoremap NN :editC
 nnoremap nr :!cargo new<space>
 command! editC edit %c
 
@@ -508,3 +508,5 @@ command! dp :!cd %c | p | :!cd ..
 nnoremap P lph
 
 nnoremap du :du<cr>
+nnoremap rr :move %f<space>
+

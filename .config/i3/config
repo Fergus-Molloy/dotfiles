@@ -207,7 +207,7 @@ assign [class="spotify"] 9
 #Start up applictions
 exec --no-startup-id discord
 exec --no-startup-id firefox
-exec --no-startup-id terminator -e "vifm ~/"
+exec --no-startup-id terminator
 
 
 #set default brightness
@@ -229,5 +229,5 @@ bindsym --release Mod1+p exec dm-tool lock
 bindsym --release Mod1+Shift+s exec flameshot gui
 bindsym --release Mod1+c exec rofi -show window
 bindsym --release Mod1+d exec "rofi -show run -run-shell-command '{terminal} -e \\" {cmd}; read -n 1 -s \\"'"
-bindsym Mod1+Shift+Return exec terminator
-#bindsym Mod1+Return exec terminator -e "vifm ~/"
+bindsym Mod1+Return exec terminator
+bindsym Mod1+Shift+Return exec terminator -e "vifm ~/"

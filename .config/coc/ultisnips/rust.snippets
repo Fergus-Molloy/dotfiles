@@ -46,10 +46,6 @@ snippet panic "Insert panic macro" w
 panic!("${1:String}",$2);$0
 endsnippet
 
-snippet res "Insert result" w
-Result<${1:Ok}, ${2:Err}>$0
-endsnippet
-
 snippet test "Make test function" b
 #[test]
 fn $1() {

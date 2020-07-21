@@ -19,7 +19,8 @@ Plug 'rust-lang/rust.vim'               " Rust support
 Plug 'Plug majutsushi/tagbar'           " Used for navigating tags
 Plug 'vim-airline/vim-airline'          " Better status line
 Plug 'vim-airline/vim-airline-themes'   " Pretty airline
-Plug 'majutsushi/tagbar'                " For tag naviagtion
+Plug 'majutsushi/tagbar'                " For tag navigation
+Plug 'junegunn/fzf.vim'                 " for file navigation within vim
 call plug#end()
 
 
@@ -30,6 +31,7 @@ call plug#end()
 " Configure colorscheme
 set t_Co=256
 let gruvbox_italic=1
+let g:gruvbox_contrast_dark="hard"
 colorscheme gruvbox
 set background=dark
 
@@ -201,7 +203,7 @@ nnoremap <leader>e :edit<space>
 nnoremap <leader>tt :TagbarToggle<cr>
 
 " flip direction of < or >
-nnoremap <leader>ff :call Flip()<cr>
+nnoremap <leader>fc :call Flip()<cr>
 function! Flip()
     let char = matchstr(getline('.'), '\%' . col('.') . 'c.')
     if char == "<"
@@ -210,6 +212,10 @@ function! Flip()
         call feedkeys("\s<\<ESC>")
     endif
 endfunction
+
+" open new file using fzf
+nnoremap <leader>ff :Files<cr>
+nnoremap <leader>fg :GFiles<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugin configuration
@@ -436,3 +442,6 @@ let g:spelunker_complex_or_compound_word_group = 'SpelunkerComplexOrCompoundWord
 let g:airline_theme='base16_gruvbox_dark_hard'
 let g:airline_powerline_fonts = 1
 let g:airline_extensions =['tagbar']
+
+" fzf ------------------------------------------------------------
+let g:fzf_preview_window = 'right:60%'
