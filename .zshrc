@@ -2,16 +2,19 @@
 export TERMINAL="terminator"
 export TERM="terminator"
 export GIT="git@github.com:Fergus-Molloy"
-
+export EDITOR="/usr/bin/nvim"
 # Path to your oh-my-zsh installation.
 export ZSH="/home/fergus/.oh-my-zsh"
 
 # Add user bin to PATH
 export PATH="/home/fergus/bin:$PATH"
 
+# add bundle to path for jekyll dev
+export PATH="/home/fergus/.gem/ruby/2.7.0/gems/bundler-2.1.4/exe:$PATH"
+
 # Add packages installed by cabal to path
 export PATH="/home/fergus/.cabal/bin:$PATH"
-#
+
 # Add cargo packages to path
 export PATH="/home/fergus/.cargo/bin:$PATH"
 
