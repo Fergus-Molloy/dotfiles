@@ -1,4 +1,14 @@
-# random exports
+# Lines configured by zsh-newuser-install
+HISTFILE=~/.histfile
+HISTSIZE=1000
+SAVEHIST=1000
+HIST_STAMPS="dd.mm.yyyy"
+setopt autocd
+unsetopt beep
+bindkey -e
+# End of lines configured by zsh-newuser-install
+
+# Random exports
 export TERMINAL="terminator"
 export TERM="terminator"
 export GIT="git@github.com:Fergus-Molloy"
@@ -6,93 +16,32 @@ export EDITOR="/usr/bin/nvim"
 # Path to your oh-my-zsh installation.
 export ZSH="/home/fergus/.oh-my-zsh"
 
-# Add user bin to PATH
+# Configure PATH
 export PATH="/home/fergus/bin:$PATH"
-
-# add bundle to path for jekyll dev
 export PATH="/home/fergus/.gem/ruby/2.7.0/gems/bundler-2.1.4/exe:$PATH"
-
-# Add packages installed by cabal to path
 export PATH="/home/fergus/.cabal/bin:$PATH"
-
-# Add cargo packages to path
 export PATH="/home/fergus/.cargo/bin:$PATH"
-
-# Add installs for this user to path
 export PATH="/home/fergus/.local/bin:$PATH"
 
 # Configure tags for rust
 export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src/"
 
 # Set theme
-#ZSH_THEME="spaceship"
+setopt prompt_subst
+source "/home/fergus/.zsh/gruvbox.zsh-theme"
 ZSH_THEME="gruvbox"
 SOLARIZED_THEME="dark"
 
-# Uncomment the following line to use case-sensitive completion.
-#CASE_SENSITIVE="true"
-
-# Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
-
-# Uncomment the following line if pasting URLs and other text is messed up.
-# DISABLE_MAGIC_FUNCTIONS=true
-
-# Uncomment the following line to enable command auto-correction.
+# Enable command auto-correction.
 ENABLE_CORRECTION="true"
 
-# Uncomment the following line to display red dots whilst waiting for completion.
-# COMPLETION_WAITING_DOTS="true"
+# Add plugins
+source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+source ~/.zsh/git.zsh
+#better matching with tab
+source ~/.zsh/compinstall
 
-# stamp shown in the history command output.
-# You can set one of the optional three formats:
-# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-HIST_STAMPS="dd.mm.yyyy"
-
-# Which plugins would you like to load?
-# Standard plugins can be found in ~/.oh-my-zsh/plugins/*
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-plugins=(git zsh-autosuggestions)
-
-source $ZSH/oh-my-zsh.sh
-
-# ------------------------------------------------------------------------------------
-# User configuration
-
-# Remove the need to type cd to change directory
-setopt autocd
-KEYTIMEOUT=1
-# enable vi mode
-bindkey -v
-
-# Better searching in command mode
-bindkey -M vicmd '?' history-incremental-search-backward
-bindkey -M vicmd '/' history-incremental-search-forward
-
-# Beginning search with arrow keys
-bindkey "^[OA" up-line-or-beginning-search
-bindkey "^[OB" down-line-or-beginning-search
-bindkey -M vicmd "k" up-line-or-beginning-search
-bindkey -M vicmd "j" down-line-or-beginning-search
-
-# Updates editor information when the keymap changes.
-function zle-keymap-select() {
-  zle reset-prompt
-  zle -R
-}
-
-zle -N zle-keymap-select
-
-function vi_mode_prompt_info() {
-  echo "${${KEYMAP/vicmd/[% NORMAL]%}/(main|viins)/[% INSERT]%}"
-}
-
-# define right prompt, regardless of whether the theme defined it
-RPS1='$(vi_mode_prompt_info)'
-RPS2=$RPS1
-
-
-# aliases
+# Aliases
 alias cl=clear
 alias v=nvim
 alias rm="rm -rv"
@@ -109,8 +58,9 @@ alias grep=rg
 alias latexmk="latexmk -lualatex -synctex=1 -shell-escape"
 alias google-chrome=firefox
 # better ls
-alias ls="exa -lh -s=name --git --group-directories-first --no-permissions --no-user"
-alias lsg="exa -lh -s=name --git --group-directories-first --no-permissions --no-user --git-ignore"
+#--no-permissions --no-user
+alias ls="exa -lh -s=name --git --group-directories-first"
+alias lsg="exa -lh -s=name --git --group-directories-first --git-ignore"
 # cargo stuff
 alias cc="cargo-root check"
 alias cr="cargo-root run"
@@ -118,7 +68,7 @@ alias ct="cargo-root test"
 alias cb="cargo-root build"
 alias cbr="cargo-root build --release"
 
-# functions
+# Functions
 mkcdir(){
     mkdir -p -- "$1" &&
         cd -P -- "$1"
