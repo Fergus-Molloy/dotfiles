@@ -1,5 +1,5 @@
 # Lines configured by zsh-newuser-install
-HISTFILE=~/.histfile
+HISTFILE=~/.zsh/histfile
 HISTSIZE=1000
 SAVEHIST=1000
 HIST_STAMPS="dd.mm.yyyy"
@@ -27,18 +27,14 @@ export PATH="/home/fergus/.local/bin:$PATH"
 export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src/"
 
 # Set theme
-setopt prompt_subst
-source "/home/fergus/.zsh/gruvbox.zsh-theme"
-ZSH_THEME="gruvbox"
-SOLARIZED_THEME="dark"
+eval "$(starship init zsh)"
+export STARSHIP_CONFIG=~/.config/starship/starship.toml
 
 # Enable command auto-correction.
 ENABLE_CORRECTION="true"
 
 # Add plugins
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
-source ~/.zsh/git.zsh
-#better matching with tab
 source ~/.zsh/compinstall
 
 # Aliases
@@ -67,6 +63,12 @@ alias cr="cargo-root run"
 alias ct="cargo-root test"
 alias cb="cargo-root build"
 alias cbr="cargo-root build --release"
+# git aliases
+alias ga="git add"
+alias gc="git commit"
+alias gcm="git commit -m"
+alias gp="git push"
+alias gpo="git push origin"
 
 # Functions
 mkcdir(){
