@@ -1,7 +1,6 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugins
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
-
 call plug#begin()
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'morhetz/gruvbox'                  " Theme so vim doesn't look bad
@@ -168,9 +167,9 @@ nmap <leader>sg Zg
 nmap <leader>sr :!delete_word <cword><cr>
 
 " Next spelling error
-nmap [s ZP
+nmap <leader>sp ZP
 " Previous spelling error
-nmap ]s ZN
+nmap <leader>sn ZP
 
 " Get word count for latex file
 nmap <F3> :w !detex \| wc -w<CR>
@@ -195,9 +194,6 @@ nnoremap <leader>k <c-w>k
 " create splits
 nnoremap <leader>sv :vsplit<cr><c-w>l
 nnoremap <leader>sh :split<cr><c-w>j
-
-" open new buffer to edit
-nnoremap <leader>e :edit<space>
 
 " Toggle tagbar navigation
 nnoremap <leader>tt :TagbarToggle<cr>

@@ -39,8 +39,13 @@
 
 snippet doc "Setup Document" b
 \documentclass[12pt]{report}
-\usepackage{amsmath}
+%better maths
+\usepackage[fleqn]{amsmath}
+\usepackage{amssymb}
+\usepackage{cancel}
+%embed images
 \usepackage{graphicx}
+%code blocks
 \usepackage{minted}
 
 \newtheorem{theorem}{Theorem}
@@ -56,7 +61,6 @@ snippet doc "Setup Document" b
 \tableofcontents
 \pagebreak
 $0
-
 \end{document}
 endsnippet
 
@@ -153,7 +157,7 @@ endsnippet
 
 snippet img "insert image" b
 \begin{center}
-	\includegraphics[width=\linewidth]{$1}
+	\includegraphics[width=\linewidth]{"./imgs$1"}
 \end{center}
 $0
 endsnippet
@@ -235,4 +239,31 @@ snippet mbox "Insert matrix box" b
 $0
 \end{matrix}
 }
+endsnippet
+
+snippet \\ "new line" iA
+\\\\
+$0
+endsnippet
+
+snippet maths "Enter aligned maths mode" b
+\begin{align*}
+$0
+\end{align*}
+endsnippet
+
+snippet frac "create fraction" i
+\dfrac{$1}{$2}$0
+endsnippet
+
+snippet { "insert left" i
+\left\\{
+endsnippet
+
+snippet } "insert left" i
+\right\\}
+endsnippet
+
+snippet eeq "epsilon equilibrium" w
+$\mathcal{E}$ equilibrium
 endsnippet
