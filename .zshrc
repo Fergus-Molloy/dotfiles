@@ -40,7 +40,7 @@ source ~/.zsh/compinstall
 # Aliases
 alias cl=clear
 alias v=nvim
-alias rm="rm -rv"
+alias rm="remove-git"
 alias pik=pikaur
 alias restart-wifi="sudo systemctl restart NetworkManager"
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
@@ -53,6 +53,7 @@ alias :q="exit"
 alias grep=rg
 alias latexmk="latexmk -lualatex -synctex=1 -shell-escape"
 alias google-chrome=firefox
+alias top=bpytop
 # better ls
 #--no-permissions --no-user
 alias ls="exa -lh -s=name --git --group-directories-first"
