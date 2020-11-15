@@ -6,5 +6,5 @@ killall -q polybar
 # polybar-msg cmd quit
 
 # Launch bar1 and bar2
-polybar topbar
+polybar top
 echo "Bars launched..."
