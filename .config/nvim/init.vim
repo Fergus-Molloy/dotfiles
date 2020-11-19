@@ -1,31 +1,46 @@
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Plugins
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let mapleader=" "
+
+" =============================================================================
+" # PLUGINS
+" =============================================================================
 call plug#begin()
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'morhetz/gruvbox'                  " Theme so vim doesn't look bad
-Plug 'preservim/nerdtree'               " Browse files within vim
-Plug 'lervag/vimtex'                    " LaTeX support
-Plug 'Chiel92/vim-autoformat'           " Autoformatter
-Plug 'mbbill/undotree'                  " A nice undo-tree viewer
-Plug 'plasticboy/vim-markdown'          " Markdown support
-Plug 'tpope/vim-fugitive'               " Git integration
+" Load plugins
+" VIM enhancements
+Plug 'ciaranm/securemodelines'
+Plug 'editorconfig/editorconfig-vim'
+Plug 'justinmk/vim-sneak'
 Plug 'tpope/vim-surround'               " Surround text with arbitrary characters
-Plug 'kamykn/popup-menu.nvim'           " Needed for spelunker
+Plug 'preservim/tagbar'
+
+" GUI enhancements
+Plug 'itchyny/lightline.vim'
+Plug 'machakann/vim-highlightedyank'
+Plug 'andymass/vim-matchup'
+Plug 'morhetz/gruvbox'                  " Theme so vim doesn't look bad
+
+" Fuzzy finder
+Plug 'airblade/vim-rooter'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+
+" Semantic language support
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+" Syntactic language support
+Plug 'cespare/vim-toml'
+Plug 'stephpy/vim-yaml'
+Plug 'rust-lang/rust.vim'
+Plug 'godlygeek/tabular'
 Plug 'kamykn/spelunker.vim'             " Better spell checker
-Plug 'cespare/vim-toml'                 " toml syntax highlighting
-Plug 'rust-lang/rust.vim'               " Rust support
-Plug 'Plug majutsushi/tagbar'           " Used for navigating tags
-Plug 'vim-airline/vim-airline'          " Better status line
-Plug 'vim-airline/vim-airline-themes'   " Pretty airline
-Plug 'majutsushi/tagbar'                " For tag navigation
-Plug 'junegunn/fzf.vim'                 " for file navigation within vim
+Plug 'lervag/vimtex'                    " LaTeX support
+
 call plug#end()
 
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Basic configuration
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if has('nvim')
+    set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
+    set inccommand=nosplit
+    noremap <C-q> :confirm qall<CR>
+end
 
 " Configure colorscheme
 set t_Co=256
@@ -33,122 +48,95 @@ let gruvbox_italic=1
 let g:gruvbox_contrast_dark="hard"
 colorscheme gruvbox
 set background=dark
-
-" Turn syntax highlighting on
 syntax on
-
-" No annoying bells
-set noerrorbells
-
-" Configure tabs
-set tabstop=4
-set softtabstop=4
-set shiftwidth=4
-set expandtab
-set smarttab
-
-" Indent for me please
-set smartindent
-
 " Line numbers
 " current line has actual line number
 " other lines are relative
 set nu rnu
-
-" Makes it easy to see what line i'm on
-set cursorline
-
-" Autoread when an external command is run
-set autoread
-
-" I want to be able to see everything
-set wrap
-
-" be smart when searching
-set ignorecase
-set smartcase
-set incsearch
-set hlsearch
-
-" Remove backups and store an undo file
-set noswapfile
-set nobackup
-set nowritebackup
-set undodir=~/.undo
-set undofile
-
-" auto save if buffer ahd been updated
-autocmd CursorHold * update
-
-" Let me see lines around the cursor
-set scrolloff=10
-
-" Return to last edit position when opening files
-au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-
 " Highlight matching brackets
 set showmatch
+set cursorline
+" Plugin settings
+let g:secure_modelines_allowed_items = [
+                \ "textwidth",   "tw",
+                \ "softtabstop", "sts",
+                \ "tabstop",     "ts",
+                \ "shiftwidth",  "sw",
+                \ "expandtab",   "et",   "noexpandtab", "noet",
+                \ "filetype",    "ft",
+                \ "foldmethod",  "fdm",
+                \ "readonly",    "ro",   "noreadonly", "noro",
+                \ "rightleft",   "rl",   "norightleft", "norl",
+                \ "colorcolumn"
+                \ ]
 
-" Automatically line break at 200 characters
-set lbr
-set tw=200
+" Lightline
+let g:lightline = {
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'cocstatus', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'filename': 'LightlineFilename',
+      \   'cocstatus': 'coc#status'
+      \ },
+      \ }
+function! LightlineFilename()
+  return expand('%:t') !=# '' ? @% : '[No Name]'
+endfunction
 
-" Set fold to use indents
-set foldmethod=indent
+" Use auocmd to force lightline update.
+autocmd User CocStatusChange,CocDiagnosticChange call lightline#update()
 
-" Set folds to always be open when a file is opened
-set foldlevel=50
+" from http://sheerun.net/2014/03/21/how-to-boost-your-vim-productivity/
+if executable('ag')
+	set grepprg=ag\ --nogroup\ --nocolor
+endif
+if executable('rg')
+	set grepprg=rg\ --no-heading\ --vimgrep
+	set grepformat=%f:%l:%c:%m
+endif
 
-" Enable tags in rust files
-autocmd BufRead *.rs :setlocal tags=./rusty-tags.vi;/,$RUST_SRC_PATH/rusty-tags.vi
+" Latex
+let g:latex_indent_enabled = 1
+let g:latex_fold_envs = 0
+let g:latex_fold_sections = []
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Key Remaps
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Set leader key to <space>
-let mapleader=" "
 
-" Open vim config
-nnoremap <leader>vc :edit ~/.config/nvim/init.vim<cr>
+" Configure spelunker ------------------------------------------------------------
+" disable vim's spell checker
+set nospell
 
-" Source vim config (reload settings)
-nnoremap <leader>vs :so ~/.config/nvim/init.vim<cr>
+" enable spelunker
+let g:enable_spelunker_vim = 0
 
-" Open .zshrc
-nnoremap <leader>vz:edit ~/.zshrc<cr>
+" Check spelling for words longer than set characters. (default: 4)
+let g:spelunker_target_min_char_len = 4
 
-" Go into insert mode at end of word
-nnoremap E ea
+" Max amount of word suggestions. (default: 15)
+let g:spelunker_max_suggest_words = 15
 
-" Toggle file viewer
-map <F2> :NERDTreeToggle<CR>
+" Max amount of highlighted words in buffer. (default: 100)
+let g:spelunker_max_hi_words_each_buf = 100
 
-" Quickly save and exit
-nnoremap <leader>w :w<cr>
-nnoremap <leader>q :q<cr>
-nnoremap <leader>z :wq<cr>
+" Spellcheck type: (default: 1)
+" 1: File is checked for spelling mistakes when opening and saving. This
+" may take a bit of time on large files.
+" 2: Spellcheck displayed words in buffer. Fast and dynamic. The waiting time
+" depends on the setting of CursorHold `set updatetime=1000`.
+let g:spelunker_check_type = 1
 
-" Move between buffers
-nnoremap <leader>n :bn<cr>
-nnoremap <leader>N :bp<cr>
+" Disable default autogroup. (default: 0)
+let g:spelunker_disable_auto_group = 0
 
-" Remove highlighting from previous search
-nmap <leader><space> :noh<cr>
+" Override highlight group name of incorrectly spelled words. (default:
+" 'SpelunkerSpellBad')
+let g:spelunker_spell_bad_group = 'SpelunkerSpellBad'
 
-" Add mappings to quickly capitalise and un-capitalise single letters
-nmap <leader>U vU
-nmap <leader>u vu
+" Override highlight group name of complex or compound words. (default:
+" 'SpelunkerComplexOrCompoundWord')
+let g:spelunker_complex_or_compound_word_group = 'SpelunkerComplexOrCompoundWord'
 
-" Remap ctrl-f to exit insert mode
-imap <c-f> <esc>
-
-" Move a line of text using CTRL+ALT+[j/k]
-nmap <c-m-j> mz:m+<cr>`z
-nmap <c-m-k> mz:m-2<cr>`z
-vmap <c-m-j> :m'>+<cr>`<my`>mzgv`yo`z
-vmap <c-m-k> :m'<-2<cr>`>my`<mzgv`yo`z
-
-" Spelling shortcuts
 " Replace with first suggestion
 nmap <leader>sf Zl<cr>
 
@@ -169,190 +157,277 @@ nmap <leader>sr :!delete_word <cword><cr>
 " Next spelling error
 nmap <leader>sp ZP
 " Previous spelling error
-nmap <leader>sn ZP
+nmap <leader>sn ZN
 
-" Get word count for latex file
-nmap <F3> :w !detex \| wc -w<CR>
 
-" Run terminal in current file location
-nmap <leader>te :term<cr>a
 
-" Insert semi colon at end of line
-nnoremap <leader>; mzA;<esc>`z:delmarks z<cr>
+" Open hotkeys
+map <C-p> :Files<CR>
+nmap <leader>; :Buffers<CR>
 
-" Some useful navigation stuff
-" Jump to end or start of line but not in insert mode
-nnoremap <leader>ll A<esc>
-nnoremap <leader>hh I<esc>
+" Quick-save
+nmap <leader>w :w<CR>
 
-" Swap between splits
-nnoremap <leader>l <c-w>l
-nnoremap <leader>h <c-w>h
-nnoremap <leader>j <c-w>j
-nnoremap <leader>k <c-w>k
+" Don't confirm .lvimrc
+let g:localvimrc_ask = 0
 
-" create splits
-nnoremap <leader>sv :vsplit<cr><c-w>l
-nnoremap <leader>sh :split<cr><c-w>j
+" rust
+let g:rustfmt_autosave = 1
+let g:rustfmt_emit_files = 1
+let g:rustfmt_fail_silently = 0
+let g:rust_clip_command = 'xclip -selection clipboard'
+
+" Completion
+" Better display for messages
+set cmdheight=1
+" You will have bad experience for diagnostic messages when it's default 4000.
+set updatetime=300
+
+" =============================================================================
+" # Editor settings
+" =============================================================================
+filetype plugin indent on
+set autoindent
+set timeoutlen=300 " http://stackoverflow.co/questions/2158516/delay-before-o-opens-a-new-line
+set encoding=utf-8
+set scrolloff=2
+set noshowmode
+set hidden
+set nowrap
+" Automatically line break at 200 characters
+set lbr
+set tw=200
+set nojoinspaces
+let g:sneak#s_next = 1
+let g:vim_markdown_new_list_item_indent = 0
+let g:vim_markdown_auto_insert_bullets = 0
+let g:vim_markdown_frontmatter = 1
+set printfont=:h10
+set printencoding=utf-8
+set printoptions=paper:letter
+" Always draw sign column. Prevent buffer moving when adding/deleting sign.
+set signcolumn=yes
+
+" Settings needed for .lvimrc
+set exrc
+set secure
+
+" Sane splits
+set splitright
+set splitbelow
+
+" Remove backups and store an undo file
+set noswapfile
+set nobackup
+set nowritebackup
+set undodir=~/.undo
+set undofile
+
+" Decent wildmenu
+set wildmenu
+set wildmode=list:longest
+set wildignore=.hg,.svn,*~,*.png,*.jpg,*.gif,*.settings,Thumbs.db,*.min.js,*.swp,publish/*,intermediate/*,*.o,*.hi,Zend,vendor
+
+" Use wide tabs
+set shiftwidth=4
+set softtabstop=4
+set tabstop=4
+set expandtab
+
+" Wrapping options
+set formatoptions=tc " wrap text and comments using textwidth
+set formatoptions+=r " continue comments when pressing ENTER in I mode
+set formatoptions+=q " enable formatting of comments with gq
+set formatoptions+=n " detect lists for formatting
+set formatoptions+=b " auto-wrap in insert mode, and do not wrap old long lines
+
+" Proper search
+set incsearch
+set ignorecase
+set smartcase
+set gdefault
+
+" Search results centered please
+nnoremap <silent> n nzz
+nnoremap <silent> N Nzz
+nnoremap <silent> * *zz
+nnoremap <silent> # #zz
+nnoremap <silent> g* g*zz
+
+" Very magic by default
+nnoremap ? ?\v
+nnoremap / /\v
+cnoremap %s/ %sm/
+
+" =============================================================================
+" # Keyboard shortcuts
+" =============================================================================
+" Ctrl+h to stop searching
+vnoremap <C-h> :nohlsearch<cr>
+nnoremap <C-h> :nohlsearch<cr>
+
+" Suspend with Ctrl+f
+vnoremap <C-f> :sus<cr>
+nnoremap <C-f> :sus<cr>
+
+" Jump to start and end of line using the home row keys
+map H ^
+map L $
+
+" Neat X clipboard integration
+" ,p will paste clipboard into buffer
+" ,c will copy entire buffer into clipboard
+noremap <leader>p :read !xsel --clipboard --output<cr>
+noremap <leader>c :w !xsel -ib<cr><cr>
+
+" <leader>s for Rg search
+noremap <leader>s :Rg
+let g:fzf_layout = { 'down': '~20%' }
+command! -bang -nargs=* Rg
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
+  \   <bang>0 ? fzf#vim#with_preview('up:60%')
+  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+  \   <bang>0)
+
+function! s:list_cmd()
+  let base = fnamemodify(expand('%'), ':h:.:S')
+  return base == '.' ? 'fd --type file --follow' : printf('fd --type file --follow | proximity-sort %s', shellescape(expand('%')))
+endfunction
+
+command! -bang -nargs=? -complete=dir Files
+  \ call fzf#vim#files(<q-args>, {'source': s:list_cmd(),
+  \                               'options': '--tiebreak=index'}, <bang>0)
+
+
+" Open new file adjacent to current file
+nnoremap <leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
+
+" No arrow keys --- force yourself to use the home row
+nnoremap <up> <nop>
+nnoremap <down> <nop>
+inoremap <up> <nop>
+inoremap <down> <nop>
+inoremap <left> <nop>
+inoremap <right> <nop>
+
+" Left and right can switch buffers
+nnoremap <left> :bp<CR>
+nnoremap <right> :bn<CR>
+
+" Move by line
+nnoremap j gj
+nnoremap k gk
+
+" Move a line of text using CTRL+ALT+[j/k]
+nmap <c-m-j> mz:m+<cr>`z
+nmap <c-m-k> mz:m-2<cr>`z
+vmap <c-m-j> :m'>+<cr>`<my`>mzgv`yo`z
+vmap <c-m-k> :m'<-2<cr>`>my`<mzgv`yo`z
 
 " Toggle tagbar navigation
-nnoremap <leader>tt :TagbarToggle<cr>
-
-" flip direction of < or >
-nnoremap <leader>fc :call Flip()<cr>
-function! Flip()
-    let char = matchstr(getline('.'), '\%' . col('.') . 'c.')
-    if char == "<"
-        call feedkeys("\s>\<ESC>")
-    elseif char == ">"
-        call feedkeys("\s<\<ESC>")
-    endif
-endfunction
+nnoremap <leader>tt :TagbarToggle<cr><c-w>l
 
 " open new file using fzf
 nnoremap <leader>ff :Files<cr>
 nnoremap <leader>fg :GFiles<cr>
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Plugin configuration
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" if hidden is not set, TextEdit might fail.
-set hidden
+" <leader><leader> toggles between buffers
+nnoremap <leader><leader> <c-^>
 
-" Better display for messages
-set cmdheight=1
+" <leader>, shows/hides hidden characters
+nnoremap <leader>, :set invlist<cr>
 
-" You will have bad experience for diagnostic messages when it's default 4000.
-set updatetime=300
+" <leader>q shows stats
+nnoremap <leader>q g<c-g>
 
-" don't give |ins-completion-menu| messages.
-set shortmess+=c
+" Keymap for replacing up to next _ or -
+noremap <leader>m ct_
 
-" always show signcolumns
-set signcolumn=yes
+" I can type :help on my own, thanks.
+map <F1> <Esc>
+imap <F1> <Esc>
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Snippet "next" keybind
+let g:coc_snippet_next = '<tab>'
 
-vnoremap <tab> <Plug>(coc-snippets-select)
+" 'Smart' nevigation
 " Use tab for trigger completion with characters ahead and navigate.
-" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config.
 inoremap <silent><expr> <TAB>
-            \ pumvisible() ? "\<C-n>" :
-            \ <SID>check_back_space() ? "\<TAB>" :
-            \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
 
 function! s:check_back_space() abort
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~# '\s'
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
-" Use <c-space> to trigger completion.
+"inoremap <silent><expr> <tab>
+"            \ pumvisible() ? coc#_select_confirm() :
+"            \ coc#expandableOrJumpable() ? "\<c-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<cr>" :
+"            \ <SID>check_back_space() ? "\<tab>" :
+"            \ coc#refresh()
+inoremap <expr> <s-tab> pumvisible() ? "\<c-p>" : "\<s-tab>"
+
+" Use <c-.> to trigger completion.
 inoremap <silent><expr> <c-space> coc#refresh()
 
-" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
-" Coc only does snippet and additional edit on confirm.
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
+" position. Coc only does snippet and additional edit on confirm.
 inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
-" Use `[c` and `]c` to navigate diagnostics
-nmap <silent> [c <Plug>(coc-diagnostic-prev)
-nmap <silent> ]c <Plug>(coc-diagnostic-next)
+" Use `[g` and `]g` to navigate diagnostics
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
-" Remap keys for gotos
+" GoTo code navigation.
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
-" Use K to show documentation in preview window
+" Use K to show documentation in preview window.
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
 function! s:show_documentation()
-    if (index(['vim','help'], &filetype) >= 0)
-        execute 'h '.expand('<cword>')
-    else
-        call CocAction('doHover')
-    endif
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
 endfunction
 
-" Highlight symbol under cursor on CursorHold
+" Highlight the symbol and its references when holding the cursor.
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
-" Remap for rename current word
+" Symbol renaming.
 nmap <leader>rn <Plug>(coc-rename)
 
-" Remap for format selected region
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
+" Introduce function text object
+" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
+xmap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap if <Plug>(coc-funcobj-i)
+omap af <Plug>(coc-funcobj-a)
 
-augroup mygroup
-    autocmd!
-    " Setup formatexpr specified filetype(s).
-    autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
-    " Update signature help on jump placeholder
-    autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-augroup end
-
-" Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
-xmap <leader>a  <Plug>(coc-codeaction-selected)
-nmap <leader>a  <Plug>(coc-codeaction-selected)
-
-" Remap for do codeAction of current line
-nmap <leader>ac  <Plug>(coc-codeaction)
-" Fix autofix problem of current line
-nmap <leader>fc  <Plug>(coc-fix-current)
-
-" Use <tab> for select selections ranges, needs server support, like: coc-tsserver, coc-python
+" Use <TAB> for selections ranges.
 nmap <silent> <TAB> <Plug>(coc-range-select)
 xmap <silent> <TAB> <Plug>(coc-range-select)
 xmap <silent> <S-TAB> <Plug>(coc-range-select-backword)
-
-" Use `:Format` to format current buffer
-command! -nargs=0 Format :call CocAction('format')
-
-" Use `:Fold` to fold current buffer
-command! -nargs=? Fold :call     CocAction('fold', <f-args>)
-
-" use `:OR` for organize import of current buffer
-command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
-
-" Add status line support, for integration with other plugin, checkout `:h coc-status`
-set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
-
-" Using CocList
-" Show all diagnostics
-nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
-" Manage extensions
-"nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
-" Show commands
-"nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
-" Find symbol of current document
+" Find symbol of current document.
 nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
-" Search workspace symbols
+
+" Search workspace symbols.
 "nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
-" Do default action for next item.
-"nnoremap <silent> <space>j  :<C-u>CocNext<CR>
-" Do default action for previous item.
-"nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
-" Resume latest coc list
-"nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
-" Snippet "next" keybind
-let g:coc_snippet_next = '<tab>'
+" Implement methods for trait
+nnoremap <silent> <space>i  :call CocActionAsync('codeAction', '', 'Implement missing members')<cr>
 
-"Make <nab> and <s-tab> work like in vscode
-inoremap <silent><expr> <tab>
-            \ pumvisible() ? coc#_select_confirm() :
-            \ coc#expandableOrJumpable() ? "\<c-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<cr>" :
-            \ <SID>check_back_space() ? "\<tab>" :
-            \ coc#refresh()
-inoremap <expr> <s-tab> pumvisible() ? "\<c-p>" : "\<s-tab>"
-
-""" Vim-markdown ------------------------------------------------------------
-let g:vim_markdown_math = 1
-let g:vim_markdown_strikethrough = 1
-
-" Autoformat on write ------------------------------------------------------------
-autocmd FileType tex let b:autoformat_autoindent=0
-au BufWrite *.c,*.h,*.hpp,*.cpp,*.tex :Autoformat
+" Show actions available at this location
+nnoremap <silent> <space>a  :CocAction<cr>
 
 """ Vimtex ------------------------------------------------------------
 let g:vimtex_compiler_progname = 'nvr'
@@ -400,44 +475,41 @@ let g:Tex_IgnoreLevel = 8
 let g:vimtex_quickfix_open_on_warning = 0
 "let g:vimtex_quickfix_autoclose_after_keystrokes=1
 
-" Configure spelunker ------------------------------------------------------------
-" disable vim's spell checker
-set nospell
+" =============================================================================
+" # Autocommands
+" =============================================================================
 
-" enable spelunker
-let g:enable_spelunker_vim = 1
+" Prevent accidental writes to buffers that shouldn't be edited
+autocmd BufRead *.orig set readonly
+autocmd BufRead *.pacnew set readonly
 
-" Check spelling for words longer than set characters. (default: 4)
-let g:spelunker_target_min_char_len = 4
+" Leave paste mode when leaving insert mode
+autocmd InsertLeave * set nopaste
 
-" Max amount of word suggestions. (default: 15)
-let g:spelunker_max_suggest_words = 15
+" Jump to last edit position on opening file
+if has("autocmd")
+  " https://stackoverflow.com/questions/31449496/vim-ignore-specifc-file-in-autocommand
+  au BufReadPost * if expand('%:p') !~# '\m/\.git/' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+endif
 
-" Max amount of highlighted words in buffer. (default: 100)
-let g:spelunker_max_hi_words_each_buf = 100
+" Follow Rust code style rules
+au Filetype rust set colorcolumn=100
 
-" Spellcheck type: (default: 1)
-" 1: File is checked for spelling mistakes when opening and saving. This
-" may take a bit of time on large files.
-" 2: Spellcheck displayed words in buffer. Fast and dynamic. The waiting time
-" depends on the setting of CursorHold `set updatetime=1000`.
-let g:spelunker_check_type = 1
+" Help filetype detection
+autocmd BufRead *.plot set filetype=gnuplot
+autocmd BufRead *.md set filetype=markdown
+autocmd BufRead *.lds set filetype=ld
+autocmd BufRead *.tex set filetype=tex
+autocmd BufRead *.trm set filetype=c
+autocmd BufRead *.xlsx.axlsx set filetype=ruby
 
-" Disable default autogroup. (default: 0)
-let g:spelunker_disable_auto_group = 0
+autocmd BufRead *.tex,*.md let g:enable_spelunker_vim = 1
 
-" Override highlight group name of incorrectly spelled words. (default:
-" 'SpelunkerSpellBad')
-let g:spelunker_spell_bad_group = 'SpelunkerSpellBad'
+" =============================================================================
+" # Footer
+" =============================================================================
 
-" Override highlight group name of complex or compound words. (default:
-" 'SpelunkerComplexOrCompoundWord')
-let g:spelunker_complex_or_compound_word_group = 'SpelunkerComplexOrCompoundWord'
-
-" airline theme ------------------------------------------------------------
-let g:airline_theme='base16_gruvbox_dark_hard'
-let g:airline_powerline_fonts = 1
-let g:airline_extensions =['tagbar']
-
-" fzf ------------------------------------------------------------
-let g:fzf_preview_window = 'right:60%'
+" nvim
+if has('nvim')
+	runtime! plugin/python_setup.vim
+endif

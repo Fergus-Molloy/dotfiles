@@ -9,9 +9,8 @@
   [[default]]
     background_color = "#282828"
     background_darkness = 0.94
-    background_type = transparent
     cursor_color = "#aaaaaa"
-    font = Source Code Variable Semi-Bold 12
+    font = Source Code Pro Semi-Bold 16
     foreground_color = "#ebdbb2"
     show_titlebar = False
     scrollbar_position = hidden
@@ -20,7 +19,6 @@
   [[spotify-tui]]
     background_color = "#282828"
     background_darkness = 0.94
-    background_type = transparent
     cursor_color = "#aaaaaa"
     font = Source Code Variable Semi-Bold 12
     foreground_color = "#ebdbb2"
@@ -34,7 +32,6 @@
   [[vis]]
     background_color = "#282828"
     background_darkness = 0.0
-    background_type = transparent
     cursor_color = "#aaaaaa"
     font = Source Code Variable Semi-Bold 10
     foreground_color = "#ebdbb2"
@@ -47,7 +44,6 @@
   [[vifm]]
     background_color = "#282828"
     background_darkness = 0.94
-    background_type = transparent
     cursor_color = "#aaaaaa"
     font = Source Code Variable Semi-Bold 12
     foreground_color = "#ebdbb2"
@@ -60,7 +56,6 @@
   [[hold]]
     background_color = "#282828"
     background_darkness = 0.94
-    background_type = transparent
     cursor_color = "#aaaaaa"
     font = Source Code Pro Semi-Bold 12
     foreground_color = "#ebdbb2"
