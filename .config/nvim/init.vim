@@ -11,12 +11,14 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'justinmk/vim-sneak'
 Plug 'tpope/vim-surround'               " Surround text with arbitrary characters
 Plug 'preservim/tagbar'
+"Plug 'thaerkh/vim-workspace' " would like to use but messes up coc
 
 " GUI enhancements
 Plug 'itchyny/lightline.vim'
 Plug 'machakann/vim-highlightedyank'
 Plug 'andymass/vim-matchup'
 Plug 'morhetz/gruvbox'                  " Theme so vim doesn't look bad
+Plug 'chriskempson/base16-vim'
 
 " Fuzzy finder
 Plug 'airblade/vim-rooter'
@@ -43,11 +45,25 @@ if has('nvim')
 end
 
 " Configure colorscheme
-set t_Co=256
-let gruvbox_italic=1
-let g:gruvbox_contrast_dark="hard"
-colorscheme gruvbox
+"set t_Co=256
+"let gruvbox_italic=1
+"let g:gruvbox_contrast_dark="hard"
+"colorscheme gruvbox
 set background=dark
+let base16colorspace=256
+colorscheme base16-gruvbox-dark-hard
+set termguicolors
+let g:base16_shell_path ="$HOME/.config/base16-shell/"
+function! s:base16_customize() abort
+    call Base16hi("Comment", g:base16_gui09, "", g:base16_cterm09, "", "", "")
+endfunction
+
+augroup on_change_colorschema
+  autocmd!
+  autocmd ColorScheme * call s:base16_customize()
+augroup END
+
+
 syntax on
 " Line numbers
 " current line has actual line number
@@ -56,7 +72,7 @@ set nu rnu
 " Highlight matching brackets
 set showmatch
 set cursorline
-" Plugin settings
+" Plugin settings -----------------------------------------------
 let g:secure_modelines_allowed_items = [
                 \ "textwidth",   "tw",
                 \ "softtabstop", "sts",
@@ -101,7 +117,6 @@ endif
 let g:latex_indent_enabled = 1
 let g:latex_fold_envs = 0
 let g:latex_fold_sections = []
-
 
 " Configure spelunker ------------------------------------------------------------
 " disable vim's spell checker
@@ -160,7 +175,6 @@ nmap <leader>sp ZP
 nmap <leader>sn ZN
 
 
-
 " Open hotkeys
 map <C-p> :Files<CR>
 nmap <leader>; :Buffers<CR>
@@ -194,9 +208,6 @@ set scrolloff=2
 set noshowmode
 set hidden
 set nowrap
-" Automatically line break at 200 characters
-set lbr
-set tw=200
 set nojoinspaces
 let g:sneak#s_next = 1
 let g:vim_markdown_new_list_item_indent = 0
@@ -220,7 +231,7 @@ set splitbelow
 set noswapfile
 set nobackup
 set nowritebackup
-set undodir=~/.undo
+set undodir=~/.vim/undo
 set undofile
 
 " Decent wildmenu
@@ -253,11 +264,6 @@ nnoremap <silent> N Nzz
 nnoremap <silent> * *zz
 nnoremap <silent> # #zz
 nnoremap <silent> g* g*zz
-
-" Very magic by default
-nnoremap ? ?\v
-nnoremap / /\v
-cnoremap %s/ %sm/
 
 " =============================================================================
 " # Keyboard shortcuts
@@ -344,12 +350,16 @@ nnoremap <leader>q g<c-g>
 " Keymap for replacing up to next _ or -
 noremap <leader>m ct_
 
+" Word counting
+:noremap <F3> :w !detex \| wc -w<CR>
+
 " I can type :help on my own, thanks.
 map <F1> <Esc>
 imap <F1> <Esc>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Snippet "next" keybind
 let g:coc_snippet_next = '<tab>'
+set sessionoptions+=globals
 
 " 'Smart' nevigation
 " Use tab for trigger completion with characters ahead and navigate.
@@ -482,6 +492,7 @@ let g:vimtex_quickfix_open_on_warning = 0
 " Prevent accidental writes to buffers that shouldn't be edited
 autocmd BufRead *.orig set readonly
 autocmd BufRead *.pacnew set readonly
+autocmd BufRead Cargo.lock set readonly
 
 " Leave paste mode when leaving insert mode
 autocmd InsertLeave * set nopaste
@@ -504,7 +515,12 @@ autocmd BufRead *.trm set filetype=c
 autocmd BufRead *.xlsx.axlsx set filetype=ruby
 
 autocmd BufRead *.tex,*.md let g:enable_spelunker_vim = 1
+autocmd BufRead *.tex,*.md set wrap
+autocmd BufRead *.tex,*.md set lbr
+autocmd BufRead *.tex,*.md set tw=200
 
+autocmd FileType python let b:coc_root_patterns = ['.git', '.env']
+autocmd FileType rust let b:coc_root_patterns = ['.git', '.toml']
 " =============================================================================
 " # Footer
 " =============================================================================
