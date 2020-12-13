@@ -200,6 +200,8 @@ exec_always --no-startup-id intel-undervolt apply
 #Open flameshot
 exec --no-startup-id flameshot
 
+exec --no-startup-id albert
+
 #assign zathura, discord and spotify to workspaces
 assign [class="discord"] 2
 assign [class="Zathura"] 3
@@ -209,7 +211,6 @@ exec --no-startup-id discord
 exec --no-startup-id firefox
 exec --no-startup-id terminator
 
-
 #set default brightness
 exec brightness 0.7
 
@@ -217,17 +218,17 @@ exec brightness 0.7
 for_window [class="^.*"] border pixel 0
 
 #setup gaps
-gaps inner 20
-gaps outer 5
+#gaps inner 20
+#gaps outer 5
 
 # setup mod key
 set $mod Alt_L
 
 # setup chrome shortcut
 bindsym --release Mod1+g exec firefox
-bindsym --release Mod1+p exec dm-tool lock
+bindsym --release Mod1+p exec i3lock-fancy -p
 bindsym --release Mod1+Shift+s exec flameshot gui
 bindsym --release Mod1+c exec rofi -show window
 bindsym --release Mod1+d exec "rofi -show run -run-shell-command '{terminal} -e \\" {cmd}; read -n 1 -s \\"'"
-bindsym Mod1+Return exec terminator
+bindsym Mod1+Return exec alacritty
 bindsym Mod1+Shift+Return exec terminator -e "vifm ~/"
