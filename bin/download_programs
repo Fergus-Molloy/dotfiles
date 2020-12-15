@@ -1,0 +1,46 @@
+#!/bin/bash
+BLUE=" \033[0;34m"
+NC=" \033[0m"
+echo -e "$BLUE
+sudo pacman -S --needed base-devel git
+git clone https://aur.archlinux.org/pikaur.git
+cd pikaur
+makepkg -fsri
+cd ../
+rm -rf pikaur"
+
+    echo -e "pikaur -S \
+alacritty \
+bpytop \
+cmatrix \
+compton \
+cowsay \
+ctags \
+discord \
+exa-git \
+feh \
+firefox \
+flameshot \
+i3-gaps \
+i3-lock-fancy \
+lolcat \
+man \
+neofetch \
+neovim \
+nm-applet \
+nodejs \
+openssh \
+polybar \
+rustup \
+spaceship-prompt-git \
+texlive-most \
+unzip \
+vifm \
+xclip \
+xorg \
+yadm \
+zathura \
+zathura-pdf-mupdf \
+zip \
+zsh \
+$NC"

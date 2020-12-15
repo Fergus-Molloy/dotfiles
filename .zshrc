@@ -7,6 +7,8 @@ setopt autocd
 unsetopt beep
 bindkey -e
 # End of lines configured by zsh-newuser-install
+autoload -Uz compinit
+compinit -d "$HOME/.cache/zsh/zcompdump"
 
 # Random exports
 export TERMINAL="alacritty"
@@ -48,7 +50,6 @@ alias cl=clear
 alias v=nvim
 alias rm="remove-git"
 alias pik=pikaur
-alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 alias brightness="xrandr --output eDP-1 --brightness"
 alias sudo="sudo "
 alias mkdir="mkdir -p"
@@ -76,6 +77,8 @@ alias gc="git commit"
 alias gcm="git commit -m"
 alias gp="git push"
 alias gpo="git push origin"
+
+neofetch
 
 # Functions
 mkcdir(){

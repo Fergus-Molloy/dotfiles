@@ -1,0 +1,5 @@
+[user]
+	email = fdm504@york.ac.uk
+	name = Fergus Molloy
+[pull]
+	rebase = false

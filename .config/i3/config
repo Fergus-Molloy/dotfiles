@@ -192,7 +192,7 @@ exec_always --no-startup-id $HOME/.config/compton/launch.sh
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 
 #Set background image
-exec_always --no-startup-id feh --bg-fill $HOME/Pictures/testbg.png
+exec_always --no-startup-id feh --bg-fill $HOME/Pictures/bg.png
 
 #Apply undervolt
 exec_always --no-startup-id intel-undervolt apply

@@ -237,7 +237,7 @@ set splitbelow
 set noswapfile
 set nobackup
 set nowritebackup
-set undodir=~/.vim/undo
+set undodir=~/.cache/vim/undo
 set undofile
 
 " Decent wildmenu
