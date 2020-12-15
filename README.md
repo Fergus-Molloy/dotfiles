@@ -2,9 +2,10 @@
 
 repo for storing my arch linux dotfiles
 
-once pikaur is installed run `cat .programs | xargs pikaur -S` to setup basic programs then install all the config files
+after initial install and network configuration get all programs with
 
-remember to let light be executed without sudo otherwise brightness keys will break
+```bash
+curl https://raw.githubusercontent.com/Fergus-Molloy/dotfiles/master/bin/download_programs | bash
+```
 
-everything is themed around [gruvbox](https://github.com/morhetz/gruvbox) so install that too
-
+Once everything installed you *should* be good to download all the dotfiles using `yadm https://github.com/Fergus-Molloy/dotfiles.git` (it will overwrite any duplicate files)
