@@ -11,7 +11,6 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'justinmk/vim-sneak'
 Plug 'tpope/vim-surround'               " Surround text with arbitrary characters
 Plug 'preservim/tagbar'
-"Plug 'thaerkh/vim-workspace' " would like to use but messes up coc
 
 " GUI enhancements
 Plug 'itchyny/lightline.vim'
@@ -22,7 +21,7 @@ Plug 'chriskempson/base16-vim'
 
 " Fuzzy finder
 Plug 'airblade/vim-rooter'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf', { 'dir': '~/.cache/fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
 " Semantic language support
@@ -35,7 +34,6 @@ Plug 'rust-lang/rust.vim'
 Plug 'godlygeek/tabular'
 Plug 'kamykn/spelunker.vim'             " Better spell checker
 Plug 'lervag/vimtex'                    " LaTeX support
-
 call plug#end()
 
 if has('nvim')
@@ -45,24 +43,32 @@ if has('nvim')
 end
 
 " Configure colorscheme
-"set t_Co=256
-"let gruvbox_italic=1
-"let g:gruvbox_contrast_dark="hard"
-"colorscheme gruvbox
 set background=dark
-let base16colorspace=256
-colorscheme base16-gruvbox-dark-hard
-set termguicolors
-let g:base16_shell_path ="$HOME/.config/base16-shell/"
-function! s:base16_customize() abort
-    call Base16hi("Comment", g:base16_gui09, "", g:base16_cterm09, "", "", "")
-endfunction
+let scheme = 'base16'
 
-augroup on_change_colorschema
-  autocmd!
-  autocmd ColorScheme * call s:base16_customize()
-augroup END
-
+if scheme == 'tomorrow-night'
+    echom "Tomorrow Night"
+    colorscheme Tomorrow-Night
+elseif scheme == 'gruvbox'
+    echom "gruvbox"
+    set t_Co=256
+    let gruvbox_italic=1
+    let g:gruvbox_contrast_dark="hard"
+    colorscheme gruvbox
+else
+    echom "Base16"
+    colorscheme base16-default-dark
+    let base16colorspace=256
+    set termguicolors
+    function! s:base16_customize() abort
+        call Base16hi("Comment", g:base16_gui09, "", g:base16_cterm09, "", "", "")
+    endfunction
+    
+    augroup on_change_colorschema
+      autocmd!
+      autocmd ColorScheme * call s:base16_customize()
+    augroup END
+endif
 
 syntax on
 " Line numbers
@@ -296,14 +302,8 @@ command! -bang -nargs=* Rg
   \           : fzf#vim#with_preview('right:50%:hidden', '?'),
   \   <bang>0)
 
-function! s:list_cmd()
-  let base = fnamemodify(expand('%'), ':h:.:S')
-  return base == '.' ? 'fd --type file --follow' : printf('fd --type file --follow | proximity-sort %s', shellescape(expand('%')))
-endfunction
-
 command! -bang -nargs=? -complete=dir Files
-  \ call fzf#vim#files(<q-args>, {'source': s:list_cmd(),
-  \                               'options': '--tiebreak=index'}, <bang>0)
+  \ call fzf#vim#files(<q-args>, {'options': '--tiebreak=index'}, <bang>0)
 
 
 " Open new file adjacent to current file
