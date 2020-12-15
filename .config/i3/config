@@ -89,11 +89,11 @@ bindsym Mod1+space focus mode_toggle
 #bindsym Mod1+d focus child
 
 # move the currently focused window to the scratchpad
-bindsym Mod1+Shift+minus move scratchpad
+bindsym Mod1+Shift+plus move scratchpad
 
 # Show the next scratchpad window or hide the focused scratchpad window.
 # If there are multiple scratchpad windows, this command cycles through them.
-bindsym Mod1+minus scratchpad show
+bindsym Mod1+Shift+minus scratchpad show
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
@@ -192,7 +192,7 @@ exec_always --no-startup-id $HOME/.config/compton/launch.sh
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 
 #Set background image
-exec_always --no-startup-id feh --bg-scale $HOME/Pictures/bg.jpg
+exec_always --no-startup-id feh --bg-fill $HOME/Pictures/testbg.png
 
 #Apply undervolt
 exec_always --no-startup-id intel-undervolt apply
@@ -209,17 +209,31 @@ assign [class="spotify"] 9
 #Start up applictions
 exec --no-startup-id discord
 exec --no-startup-id firefox
-exec --no-startup-id terminator
+exec --no-startup-id alacritty
 
 #set default brightness
 exec brightness 0.7
 
-#remove title bar
-for_window [class="^.*"] border pixel 0
+#chage border colours
+for_window [class="^.*"] border pixel 5
+for_window [class="discord"] border pixel 0
+for_window [class="Alacritty"] floating enable
+for_window [class="Alacritty"] resize set 1680 945
+for_window [class="Alacritty"] sticky enable
+
+# class                 border  backgr. text    indicator child_border
+client.focused          #a778bf #a778bf #ffffff #a778bf   #a778bf
+client.focused_inactive #333333 #5f676a #ffffff #484e50   #5f676a
+client.unfocused        #43304d #43304d #888888 #43304d   #43304d
+client.urgent           #2f343a #900000 #ffffff #900000   #900000
+client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
+
+client.background       #ffffff
+
 
 #setup gaps
-#gaps inner 20
-#gaps outer 5
+gaps inner 20
+gaps outer 5
 
 # setup mod key
 set $mod Alt_L
@@ -232,3 +246,75 @@ bindsym --release Mod1+c exec rofi -show window
 bindsym --release Mod1+d exec "rofi -show run -run-shell-command '{terminal} -e \\" {cmd}; read -n 1 -s \\"'"
 bindsym Mod1+Return exec alacritty
 bindsym Mod1+Shift+Return exec terminator -e "vifm ~/"
+
+
+# repetitive commands that should be run once
+
+set $init 'true'
+
+# align alacritty vertically
+for_window [class="Alacritty"] move up
+for_window [class="Alacritty"] move up
+for_window [class="Alacritty"] move up
+for_window [class="Alacritty"] move up
+for_window [class="Alacritty"] move up
+for_window [class="Alacritty"] move up
+for_window [class="Alacritty"] move up
+for_window [class="Alacritty"] move up
+for_window [class="Alacritty"] move up
+for_window [class="Alacritty"] move up
+for_window [class="Alacritty"] move up
+for_window [class="Alacritty"] move up
+for_window [class="Alacritty"] move up
+for_window [class="Alacritty"] move up
+for_window [class="Alacritty"] move up
+for_window [class="Alacritty"] move up
+for_window [class="Alacritty"] move up
+for_window [class="Alacritty"] move up
+for_window [class="Alacritty"] move up
+for_window [class="Alacritty"] move up
+
+# align alacritty horizontally
+for_window [class="Alacritty"] move left
+for_window [class="Alacritty"] move left
+for_window [class="Alacritty"] move left
+for_window [class="Alacritty"] move left
+for_window [class="Alacritty"] move left
+for_window [class="Alacritty"] move left
+for_window [class="Alacritty"] move left
+for_window [class="Alacritty"] move left
+for_window [class="Alacritty"] move left
+for_window [class="Alacritty"] move left
+for_window [class="Alacritty"] move left
+for_window [class="Alacritty"] move left
+for_window [class="Alacritty"] move left
+for_window [class="Alacritty"] move left
+for_window [class="Alacritty"] move left
+for_window [class="Alacritty"] move left
+for_window [class="Alacritty"] move left
+for_window [class="Alacritty"] move left
+for_window [class="Alacritty"] move left
+for_window [class="Alacritty"] move left
+for_window [class="Alacritty"] move left
+for_window [class="Alacritty"] move left
+for_window [class="Alacritty"] move left
+for_window [class="Alacritty"] move left
+for_window [class="Alacritty"] move left
+for_window [class="Alacritty"] move left
+for_window [class="Alacritty"] move left
+for_window [class="Alacritty"] move left
+for_window [class="Alacritty"] move left
+for_window [class="Alacritty"] move left
+for_window [class="Alacritty"] move left
+for_window [class="Alacritty"] move left
+for_window [class="Alacritty"] move left
+for_window [class="Alacritty"] move left
+for_window [class="Alacritty"] move left
+for_window [class="Alacritty"] move left
+for_window [class="Alacritty"] move left
+for_window [class="Alacritty"] move left
+for_window [class="Alacritty"] move left
+for_window [class="Alacritty"] move left
+for_window [class="Alacritty"] move left
+for_window [class="Alacritty"] move left
+for_window [class="Alacritty"] move left
