@@ -18,9 +18,5 @@ style = "bold yellow"
 threshold = 100
 style = "bold green"
 
-#[username]
-#style_user = "yellow bold"
-#style_root = "black bold"
-#format = "[$user]($style)[ @ ](purple bold)"
-#disabled = false
-#show_always = true
+[[Directory]]
+truncate_to_repo = true
