@@ -219,7 +219,6 @@ for_window [class="^.*"] border pixel 5
 for_window [class="discord"] border pixel 0
 for_window [class="Alacritty"] floating enable
 for_window [class="Alacritty"] resize set 1680 945
-for_window [class="Alacritty"] sticky enable
 
 # class                 border  backgr. text    indicator child_border
 client.focused          #a778bf #a778bf #ffffff #a778bf   #a778bf
@@ -243,15 +242,17 @@ bindsym --release Mod1+g exec firefox
 bindsym --release Mod1+p exec i3lock-fancy -p
 bindsym --release Mod1+Shift+s exec flameshot gui
 bindsym --release Mod1+c exec rofi -show window
+bindsym --release Mod1+s exec rofi -show ssh
 bindsym --release Mod1+d exec "rofi -show run -run-shell-command '{terminal} -e \\" {cmd}; read -n 1 -s \\"'"
 bindsym Mod1+Return exec alacritty
-bindsym Mod1+Shift+Return exec terminator -e "vifm ~/"
+bindsym XF86MonBrightnessUp exec /home/fergus/bin/brightness -i 0.1
+bindsym XF86MonBrightnessDown exec /home/fergus/bin/brightness -d 0.1
+
+
+
 
 
 # repetitive commands that should be run once
-
-set $init 'true'
-
 # align alacritty vertically
 for_window [class="Alacritty"] move up
 for_window [class="Alacritty"] move up
