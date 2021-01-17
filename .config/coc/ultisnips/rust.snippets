@@ -24,26 +24,12 @@
 #
 # Online reference: https://github.com/SirVer/ultisnips/blob/master/doc/UltiSnips.txt
 
-snippet fn "New function" w
-fn ${1:function_name}(${2:arguments})${3: -> ${4:return}} {
-	$0
-}
-endsnippet
-
-snippet vec "vector" w
-Vec<$1>$0
-endsnippet
-
 snippet print "insert print macro" w
 println!("${1:String}",$2);$0
 endsnippet
 
 snippet let "Insert new variable" b
 let ${1:var}${2:: ${3:type}} = $4;$0
-endsnippet
-
-snippet panic "Insert panic macro" w
-panic!("${1:String}",$2);$0
 endsnippet
 
 snippet test "Make test function" b
@@ -53,16 +39,20 @@ fn $1() {
 }
 endsnippet
 
-snippet assert "Insert assert macro" b
-assert!()
-endsnippet
-
-snippet asserteq "Insert assert_eq macro" b
-assert_eq!($1, $2);$0
-endsnippet
-
 snippet thread "insert new thread" w
 thread::spawn(move |${1:args}| {
 	$0
 });
+endsnippet
+
+snippet derive "insert derive" b
+#[derive($0)]
+endsnippet
+
+snippet pr "insert print" b
+print!("$1", $0);
+endsnippet
+
+snippet prl "insert println" b
+println!("$1", $0);
 endsnippet

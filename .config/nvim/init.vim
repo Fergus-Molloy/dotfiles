@@ -16,8 +16,14 @@ Plug 'preservim/tagbar'
 Plug 'itchyny/lightline.vim'
 Plug 'machakann/vim-highlightedyank'
 Plug 'andymass/vim-matchup'
-Plug 'morhetz/gruvbox'                  " Theme so vim doesn't look bad
+Plug 'kamykn/popup-menu.nvim'
+Plug 'junegunn/vim-emoji'
+
+" themes
+Plug 'arcticicestudio/nord-vim'
 Plug 'chriskempson/base16-vim'
+Plug 'morhetz/gruvbox'
+Plug 'dracula/vim', { 'as': 'dracula' }
 
 " Fuzzy finder
 Plug 'airblade/vim-rooter'
@@ -42,21 +48,28 @@ if has('nvim')
     noremap <C-q> :confirm qall<CR>
 end
 
+let scheme = 'dracula'
 " Configure colorscheme
 set background=dark
-let scheme = 'base16'
 
 if scheme == 'tomorrow-night'
-    echom "Tomorrow Night"
     colorscheme Tomorrow-Night
 elseif scheme == 'gruvbox'
-    echom "gruvbox"
     set t_Co=256
     let gruvbox_italic=1
     let g:gruvbox_contrast_dark="hard"
     colorscheme gruvbox
+elseif scheme == 'nord'
+    let g:nord_bold = 1
+    let g:nord_italic = 1
+    colorscheme nord
+elseif scheme == 'dracula'
+    let g:dracula_bold = 1
+    let g:dracula_italic = 1
+    let g:dracula_colorterm = 1
+    set background=dark
+    colorscheme dracula
 else
-    echom "Base16"
     colorscheme base16-default-dark
     let base16colorspace=256
     set termguicolors
@@ -70,6 +83,9 @@ else
     augroup END
 endif
 
+" automatically change to gruv box when latex or markdown file is entered
+"au BufRead *.tex,*.md call SetGruvbox()
+
 syntax on
 " Line numbers
 " current line has actual line number
@@ -77,8 +93,39 @@ syntax on
 set nu rnu
 " Highlight matching brackets
 set showmatch
+
+" Easier to see what line I'm on
 set cursorline
+
+" Don't wrap long lines by default
+set nowrap
+
+" If we are wrapping then wrap sensibly
+set lbr
+
+" Wrap at 150 characters
+set tw=150
+
+let t:wrapped = 0
+function ToggleWrap()
+    if t:wrapped == 0
+        set wrap
+        let t:wrapped =1
+    else
+        set nowrap
+        let t:wrapped =0
+    endif
+endfunction
+" Just in case I want wrapping
+nnoremap <leader>l : call ToggleWrap()<CR>
+
+
 " Plugin settings -----------------------------------------------
+
+" Configure emojis 
+set completefunc=emoji#complete
+nnoremap <silent> <Leader><Bslash> :s/:\([^:]\+\):/\=emoji#for(submatch(1), submatch(0))/g<CR>:noh<CR>
+
 let g:secure_modelines_allowed_items = [
                 \ "textwidth",   "tw",
                 \ "softtabstop", "sts",
@@ -124,31 +171,53 @@ let g:latex_indent_enabled = 1
 let g:latex_fold_envs = 0
 let g:latex_fold_sections = []
 
-" Configure spelunker ------------------------------------------------------------
+" Configure spelling ------------------------------------------------------------
 " disable vim's spell checker
-set nospell
+set nospell 
+set spelllang=en_gb
 
-" enable spelunker
-let g:enable_spelunker_vim = 0
+" Auto capitalise i to I 
+autocmd BufRead *.tex,*md ab i I
 
-" Check spelling for words longer than set characters. (default: 4)
-let g:spelunker_target_min_char_len = 4
+" Enable spelunker.vim
+let g:enable_spelunker_vim = 1
 
-" Max amount of word suggestions. (default: 15)
-let g:spelunker_max_suggest_words = 15
+" Check all words
+let g:spelunker_target_min_char_len = 1
 
-" Max amount of highlighted words in buffer. (default: 100)
-let g:spelunker_max_hi_words_each_buf = 100
+" 10 is usually enough
+let g:spelunker_max_suggest_words = 10
+
+" default of 100 is not enough if I open a big file
+let g:spelunker_max_hi_words_each_buf = 250
 
 " Spellcheck type: (default: 1)
-" 1: File is checked for spelling mistakes when opening and saving. This
-" may take a bit of time on large files.
-" 2: Spellcheck displayed words in buffer. Fast and dynamic. The waiting time
-" depends on the setting of CursorHold `set updatetime=1000`.
 let g:spelunker_check_type = 1
 
-" Disable default autogroup. (default: 0)
-let g:spelunker_disable_auto_group = 0
+" 1: Highlight all types (SpellBad, SpellCap, SpellRare, SpellLocal).
+let g:spelunker_highlight_type = 1
+
+" Disable URI checking
+let g:spelunker_disable_uri_checking = 1
+
+" Disable acronym checking because I use them a lot
+let g:spelunker_disable_acronym_checking = 1
+
+" Disable checking words in backtick/backquote so it doesn't check code blocks
+let g:spelunker_disable_backquoted_checking = 1
+
+" Disable default autogroup I will use my own
+let g:spelunker_disable_auto_group = 1
+
+" Custom autogroup
+augroup spelunker
+  autocmd!
+  " Setting for g:spelunker_check_type = 1:
+  autocmd BufWinEnter,BufWritePost *.vim,*.json,*.md,*.tex call spelunker#check()
+
+  " Setting for g:spelunker_check_type = 2:
+  autocmd CursorHold *.vim,*.json,*.md,*.tex call spelunker#check_displayed_words()
+augroup END
 
 " Override highlight group name of incorrectly spelled words. (default:
 " 'SpelunkerSpellBad')
@@ -157,6 +226,10 @@ let g:spelunker_spell_bad_group = 'SpelunkerSpellBad'
 " Override highlight group name of complex or compound words. (default:
 " 'SpelunkerComplexOrCompoundWord')
 let g:spelunker_complex_or_compound_word_group = 'SpelunkerComplexOrCompoundWord'
+
+" Override highlight setting.
+highlight SpelunkerSpellBad cterm=underline ctermfg=247 gui=underline guifg=#9e9e9e
+highlight SpelunkerComplexOrCompoundWord cterm=underline ctermfg=NONE gui=underline guifg=NONE
 
 " Replace with first suggestion
 nmap <leader>sf Zl<cr>
@@ -245,7 +318,7 @@ set wildmenu
 set wildmode=list:longest
 set wildignore=.hg,.svn,*~,*.png,*.jpg,*.gif,*.settings,Thumbs.db,*.min.js,*.swp,publish/*,intermediate/*,*.o,*.hi,Zend,vendor
 
-" Use wide tabs
+" Use sensible tabs
 set shiftwidth=4
 set softtabstop=4
 set tabstop=4
@@ -336,6 +409,7 @@ nnoremap <leader>tt :TagbarToggle<cr><c-w>l
 
 " open new file using fzf
 nnoremap <leader>ff :Files<cr>
+nnoremap <leader>fl :Lines<cr>
 nnoremap <leader>fg :GFiles<cr>
 
 " <leader><leader> toggles between buffers
@@ -494,7 +568,7 @@ autocmd BufRead *.orig set readonly
 autocmd BufRead *.pacnew set readonly
 autocmd BufRead Cargo.lock set readonly
 
-" Leave paste mode when leaving insert mode
+" Leave paste mode when leaving insert made 
 autocmd InsertLeave * set nopaste
 
 " Jump to last edit position on opening file
@@ -514,13 +588,9 @@ autocmd BufRead *.tex set filetype=tex
 autocmd BufRead *.trm set filetype=c
 autocmd BufRead *.xlsx.axlsx set filetype=ruby
 
-autocmd BufRead *.tex,*.md let g:enable_spelunker_vim = 1
-autocmd BufRead *.tex,*.md set wrap
-autocmd BufRead *.tex,*.md set lbr
-autocmd BufRead *.tex,*.md set tw=200
 
-autocmd FileType python let b:coc_root_patterns = ['.git', '.env']
-autocmd FileType rust let b:coc_root_patterns = ['.git', '.toml']
+au FileType python let b:coc_root_patterns = ['.git', '.env']
+au FileType rust let b:coc_root_patterns = ['.git', '.toml']
 " =============================================================================
 " # Footer
 " =============================================================================
@@ -529,3 +599,4 @@ autocmd FileType rust let b:coc_root_patterns = ['.git', '.toml']
 if has('nvim')
 	runtime! plugin/python_setup.vim
 endif
+

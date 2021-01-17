@@ -1,4 +1,16 @@
-background_opacity: 0.9
+background_opacity: 1
+font:
+  size: 11
+  normal:
+    family: Fira Code
+    style: Regular
+  bold:
+    family: Fira Code
+  italic:
+    family: Fira Code
+
+key_bindings:
+  - { key: J,        mods: Control,  chars: "fg\n"   }
 
 ## Base16 Gruvbox dark, hard - alacritty color config
 ## Dawid Kurek (dawikur@gmail.com), morhetz (https://github.com/morhetz/gruvbox)

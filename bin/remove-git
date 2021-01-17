@@ -1,19 +1,14 @@
 #!/bin/bash
-echo $1
-if [ "$1" == "-f" ] 
-then
-    echo "rm -rfv $i"
-    rm -rv $@
-fi
-for i in $@
+
+for i in "$@"
 do
-    find $i -name .git | grep .
+    find "$i" -name .git | grep .
     if [ $? -eq 1 ]
     then
         echo "rm -rv $i"
-        rm -rv $i
+        rm -rv "$i"
     else
         echo "rm -rfv $i"
-        rm -rvf $i
+        rm -rvf "$i"
     fi
 done

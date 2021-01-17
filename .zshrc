@@ -60,6 +60,7 @@ eval "$(zoxide init zsh)"
 # alias brightness="xrandr --output eDP-1 --brightness"
 alias cl=clear
 alias v=nvim
+alias sv="sudoedit "
 alias rm="remove-git"
 alias cd=z
 alias cdi=zi
@@ -72,7 +73,8 @@ alias pik=pikaur
 alias volume=pulsemixer
 alias latexmk="latexmk -lualatex -synctex=1 -shell-escape"
 alias reflector-update="reflector --verbose --latest 200 --protocol http --protocol https --sort rate --save /etc/pacman.d/mirrorlist"
-
+alias mountj="ecryptfs-mount-private"
+alias umountj="ecryptfs-umount-private"
 # better ls
 #--no-permissions --no-user
 alias ls="exa -lh -s=name --git --group-directories-first --no-permissions --no-user"
@@ -88,9 +90,9 @@ alias cbr="cargo-root build --release"
 
 # git aliases
 alias ga="git add"
-alias gaa="git add ."
+alias gaa="git add --all"
 alias gc="git commit"
-alias gcm="git commit -m"
+alias gcm="git commit -am"
 alias gp="git push"
 alias gpo="git push origin"
 

@@ -200,15 +200,13 @@ exec_always --no-startup-id intel-undervolt apply
 #Open flameshot
 exec --no-startup-id flameshot
 
-exec --no-startup-id albert
-
 #assign zathura, discord and spotify to workspaces
 assign [class="discord"] 2
 assign [class="Zathura"] 3
 assign [class="spotify"] 9
 #Start up applictions
 exec --no-startup-id discord
-exec --no-startup-id firefox
+#exec --no-startup-id firefox
 exec --no-startup-id alacritty
 
 #set default brightness
