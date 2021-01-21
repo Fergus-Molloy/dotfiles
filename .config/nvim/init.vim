@@ -231,9 +231,6 @@ let g:spelunker_complex_or_compound_word_group = 'SpelunkerComplexOrCompoundWord
 highlight SpelunkerSpellBad cterm=underline ctermfg=247 gui=underline guifg=#9e9e9e
 highlight SpelunkerComplexOrCompoundWord cterm=underline ctermfg=NONE gui=underline guifg=NONE
 
-" Replace with first suggestion
-nmap <leader>sf Zl<cr>
-
 " Type replacement
 nmap <leader>sc Zc
 nmap <leader>SC ZC
