@@ -1,0 +1,9 @@
+[general]
+seperator = " | "
+
+[aliases]
+"firefox" = "Firefox"
+"discord" = "Discord"
+
+[options]
+remove_duplicates = true
