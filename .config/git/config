@@ -1,7 +1,18 @@
 [user]
-	email = fdm504@york.ac.uk
+	email = fergus@molloy.xyz
 	name = Fergus Molloy
+	signingKey = E5FB78380E7C44A2D14D212A07C936BFE9ADBE25
 [pull]
 	rebase = false
 [init]
 	defaultBranch = main
+[color]
+	ui = true
+[merge]
+	tool = nvimdiff
+[commit]
+	gpgsign = true
+[gpg]
+	program = gpg
+[tag]
+	forceSignAnnotated = true

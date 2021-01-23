@@ -10,10 +10,6 @@ font pango:Source Code Pro Semibold 12
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
 #font pango:DejaVu Sans Mono 8
 
-# xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
-# screen before suspend. Use loginctl lock-session to lock your screen.
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
-
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
 exec --no-startup-id nm-applet
@@ -44,23 +40,11 @@ bindsym Mod1+$down focus down
 bindsym Mod1+$up focus up
 bindsym Mod1+$right focus right
 
-# alternatively, you can use the cursor keys:
-#bindsym Mod1+Left focus left
-#bindsym Mod1+Down focus down
-#bindsym Mod1+Up focus up
-#bindsym Mod1+Right focus right
-
 # move focused window
 bindsym Mod1+Shift+$left move left
 bindsym Mod1+Shift+$down move down
 bindsym Mod1+Shift+$up move up
 bindsym Mod1+Shift+$right move right
-
-# alternatively, you can use the cursor keys:
-#bindsym Mod1+Shift+Left move left
-#bindsym Mod1+Shift+Down move down
-#bindsym Mod1+Shift+Up move up
-#bindsym Mod1+Shift+Right move right
 
 # split in horizontal orientation
 bindsym Mod1+b split h
@@ -97,16 +81,16 @@ bindsym Mod1+Shift+minus scratchpad show
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
-set $ws1 "1"
-set $ws2 "2"
-set $ws3 "3"
+set $ws1 "dev"
+set $ws2 "web"
+set $ws3 "social"
 set $ws4 "4"
 set $ws5 "5"
 set $ws6 "6"
 set $ws7 "7"
 set $ws8 "8"
-set $ws9 "9"
-set $ws10 "10"
+set $ws9 "music"
+set $ws10 "git"
 
 # switch to workspace
 bindsym Mod1+1 workspace number $ws1
@@ -152,33 +136,12 @@ mode "resize" {
         bindsym $up         resize shrink height 10 px or 10 ppt
         bindsym $right      resize grow width 10 px or 10 ppt
 
-        # same bindings, but for the arrow keys
-        bindsym Left        resize shrink width 10 px or 10 ppt
-        bindsym Down        resize grow height 10 px or 10 ppt
-        bindsym Up          resize shrink height 10 px or 10 ppt
-        bindsym Right       resize grow width 10 px or 10 ppt
-
         # back to normal: Enter or Escape or Mod1+r
         bindsym Return mode "default"
         bindsym Escape mode "default"
         bindsym Mod1+r mode "default"
 }
-
 bindsym Mod1+r mode "resize"
-
-
-#######################################################################
-# automatically start i3-config-wizard to offer the user to create a
-# keysym-based config which used their favorite modifier (alt or windows)
-#
-# i3-config-wizard will not launch if there already is a config file
-# in ~/.config/i3/config (or $XDG_CONFIG_HOME/i3/config if set) or
-# ~/.i3/config.
-#
-# Please remove the following exec line:
-#######################################################################
-#exec i3-config-wizard
-
 
 
 #######################################
@@ -201,41 +164,39 @@ exec_always --no-startup-id intel-undervolt apply
 exec --no-startup-id flameshot
 
 #assign zathura, discord and spotify to workspaces
-assign [class="discord"] 2
-assign [class="Zathura"] 3
-assign [class="spotify"] 9
+assign [class="discord"] $ws3
+assign [class="Zathura"] $ws2
+assign [class="spotify"] $ws9
+assign [class="gitkraken"] $ws10
+
 #Start up applictions
 exec --no-startup-id discord
-#exec --no-startup-id firefox
 exec --no-startup-id alacritty
+exec --no-startup-id gitkraken
 
-#set default brightness
-exec brightness 0.7
-
-#chage border colours
+# Change borders
 for_window [class="^.*"] border pixel 5
 for_window [class="discord"] border pixel 0
 for_window [class="Alacritty"] floating enable
 for_window [class="Alacritty"] resize set 1680 945
 
+# Configure border colours
 # class                 border  backgr. text    indicator child_border
 client.focused          #a778bf #a778bf #ffffff #a778bf   #a778bf
 client.focused_inactive #333333 #5f676a #ffffff #484e50   #5f676a
 client.unfocused        #43304d #43304d #888888 #43304d   #43304d
 client.urgent           #2f343a #900000 #ffffff #900000   #900000
 client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
-
 client.background       #ffffff
 
-
-#setup gaps
+# Setup gaps
 gaps inner 20
 gaps outer 5
 
-# setup mod key
+# Setup mod key
 set $mod Alt_L
 
-# setup chrome shortcut
+# Setup shortcuts
 bindsym --release Mod1+g exec firefox
 bindsym --release Mod1+p exec i3lock-fancy -p
 bindsym --release Mod1+Shift+s exec flameshot gui
@@ -317,3 +278,5 @@ for_window [class="Alacritty"] move left
 for_window [class="Alacritty"] move left
 for_window [class="Alacritty"] move left
 for_window [class="Alacritty"] move left
+
+# 212G to go to binds

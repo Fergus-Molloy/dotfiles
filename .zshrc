@@ -25,7 +25,8 @@ export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig/:$PKG_CONFIG_PATH
 export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src/"
 # For theme
 export STARSHIP_CONFIG=~/.config/starship/starship.toml
-
+# For GPG
+export GPG_TTY=$(tty)
 #======================================================================#
 # Path                                                                 #
 #======================================================================#
@@ -34,7 +35,6 @@ export PATH="/home/fergus/.gem/ruby/2.7.0/gems/bundler-2.1.4/exe:$PATH"
 export PATH="/home/fergus/.cabal/bin:$PATH"
 export PATH="/home/fergus/.cargo/bin:$PATH"
 export PATH="/home/fergus/.local/bin:$PATH"
-
 
 #======================================================================#
 # Theme                                                                #
@@ -75,6 +75,7 @@ alias latexmk="latexmk -lualatex -synctex=1 -shell-escape"
 alias reflector-update="reflector --verbose --latest 200 --protocol http --protocol https --sort rate --save /etc/pacman.d/mirrorlist"
 alias mountj="ecryptfs-mount-private"
 alias umountj="ecryptfs-umount-private"
+alias copy="xclip -selection clipboard"
 # better ls
 #--no-permissions --no-user
 alias ls="exa -lh -s=name --git --group-directories-first --no-permissions --no-user"
@@ -92,7 +93,8 @@ alias cbr="cargo-root build --release"
 alias ga="git add"
 alias gaa="git add --all"
 alias gc="git commit"
-alias gcm="git commit -am"
+alias gam="git commit -am"
+alias gcm="git commit -m"
 alias gp="git push"
 alias gpo="git push origin"
 
