@@ -15,4 +15,10 @@
 [gpg]
 	program = gpg
 [tag]
-	forceSignAnnotated = true
+    forceSignAnnotated = true
+[diff]
+	tool = vimdiff3
+[difftool "vimdiff3"]
+	path = /bin/nvim
+[difftool]
+	prompt = false

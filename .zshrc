@@ -4,6 +4,7 @@ HISTSIZE=1000
 SAVEHIST=1000
 HIST_STAMPS="dd.mm.yyyy"
 setopt autocd
+setopt MULTIOS
 unsetopt beep
 bindkey -e
 ENABLE_CORRECTION="true"
@@ -62,6 +63,7 @@ alias cl=clear
 alias v=nvim
 alias sv="sudoedit "
 alias rm="remove-git"
+alias cp="cp -r"
 alias cd=z
 alias cdi=zi
 alias sudo="sudo "
@@ -76,18 +78,15 @@ alias reflector-update="reflector --verbose --latest 200 --protocol http --proto
 alias mountj="ecryptfs-mount-private"
 alias umountj="ecryptfs-umount-private"
 alias copy="xclip -selection clipboard"
+alias c="cargo"
+alias cb="clipcatctl"
+
 # better ls
 #--no-permissions --no-user
 alias ls="exa -lh -s=name --git --group-directories-first --no-permissions --no-user"
 alias lsa="exa -lha -s=name --git --group-directories-first --no-permissions --no-user"
+alias lsp="exa -lha -s=name --git --group-directories-first"
 alias lsg="exa -lh -s=name --git --group-directories-first --git-ignore --no-permissions --no-user"
-
-# cargo aliases
-alias cc="cargo-root check"
-alias cr="cargo-root run"
-alias ct="cargo-root test"
-alias cb="cargo-root build"
-alias cbr="cargo-root build --release"
 
 # git aliases
 alias ga="git add"
@@ -116,4 +115,13 @@ cn(){
     cargo new "$@" &&
         cd -P -- "${@: -1}"
 }
+
+# Clipcat
+if type clipcat-menu >/dev/null 2>&1; then
+    alias clipedit=' clipcat-menu --finder=builtin edit'
+    alias clipdel=' clipcat-menu --finder=builtin remove'
+
+    bindkey -s '^[' "^Q clipcat-menu --finder=builtin insert ^J"
+    bindkey -s '^]' "^Q clipcat-menu --finder=builtin remove ^J"
+fi
 

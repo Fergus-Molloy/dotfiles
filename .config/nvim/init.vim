@@ -8,8 +8,10 @@ call plug#begin()
 " VIM enhancements
 Plug 'ciaranm/securemodelines'
 Plug 'editorconfig/editorconfig-vim'
+Plug 'kamykn/spelunker.vim'
 Plug 'justinmk/vim-sneak'
-Plug 'tpope/vim-surround'               " Surround text with arbitrary characters
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-fugitive'
 Plug 'preservim/tagbar'
 
 " GUI enhancements
@@ -38,8 +40,7 @@ Plug 'cespare/vim-toml'
 Plug 'stephpy/vim-yaml'
 Plug 'rust-lang/rust.vim'
 Plug 'godlygeek/tabular'
-Plug 'kamykn/spelunker.vim'             " Better spell checker
-Plug 'lervag/vimtex'                    " LaTeX support
+Plug 'lervag/vimtex'
 call plug#end()
 
 if has('nvim')

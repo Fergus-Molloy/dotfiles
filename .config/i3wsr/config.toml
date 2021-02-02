@@ -4,6 +4,7 @@ seperator = " | "
 [aliases]
 "firefox" = "Firefox"
 "discord" = "Discord"
+"ptolemy-vergil-VergilApplication" = "Ptolemy 2"
 
 [options]
 remove_duplicates = true

@@ -163,6 +163,12 @@ exec_always --no-startup-id intel-undervolt apply
 #Run i3 workspace renamer
 exec_always --no-startup-id /usr/bin/i3wsr --config ~/.config/i3wsr/config.toml
 
+# start clipcatd
+exec_always --no-startup-id clipcatd
+
+bindsym Mod1+bracketleft exec "clipcat-menu -f rofi insert"
+bindsym Mod1+bracketright exec "clipcat-menu -f rofi remove"
+
 #Open flameshot
 exec --no-startup-id flameshot
 
@@ -170,6 +176,7 @@ exec --no-startup-id flameshot
 assign [class="discord"] $ws3
 assign [class="spotify"] $ws9
 assign [class="GitKraken"] $ws10
+#assign [class="ptolemy-vergil-VergilApplication"] $ws9
 
 #Start up applictions
 exec --no-startup-id firefox
@@ -201,7 +208,7 @@ set $mod Alt_L
 
 # Setup shortcuts
 bindsym --release Mod1+g exec firefox
-bindsym --release Mod1+p exec i3lock-fancy -p
+bindsym --release Mod1+i exec i3lock-fancy -p
 bindsym --release Mod1+Shift+s exec flameshot gui
 bindsym --release Mod1+c exec rofi -show window
 bindsym --release Mod1+s exec rofi -show ssh
