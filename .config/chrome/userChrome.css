@@ -87,10 +87,10 @@ tab[selected="true"] .tab-background {
 }
 .tabbrowser-tab > .tab-stack > .tab-background:not([selected="true"]) {
 	transition: all 0.3s ease !important;
-	background-color: rgba(var(--cyan), 0.2) !important;
+	background-color: rgba(var(--cyan), 0.6) !important;
 }
 .tabbrowser-tab:hover > .tab-stack > .tab-background:not([selected="true"]) {
-    background-color: rgba(var(--cyan), 0.7) !important;
+    background-color: rgba(var(--cyan), 0.9) !important;
 }
 
 
