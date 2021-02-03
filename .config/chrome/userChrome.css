@@ -12,6 +12,7 @@
 	--yellow: 250,189,47;
 	--red: 204,36,29;
 	--purple: 177,98,134;
+    --test: 0,255,0;
 }
 
 /*================ LIGHT THEME ================*/
@@ -28,8 +29,6 @@ body[lwt-sidebar-brighttext] {
 	--main-bgcolor: var(--dark-color);
 	--transparent-bgcolor: var(--dark-color);
 }
-
-
 
 
 /*================== MAIN HEADER ==================*/
@@ -66,7 +65,7 @@ tab[selected="true"] .tab-content {
 	color: rgba(var(--accent-color), 1) !important;
 }
 tab[selected="true"] .tab-background {
-	background: rgba(var(--green), 1) !important;
+	background: rgba(var(--green), 1) !important; /* green highlighted tab */
 }
 
 .tabbrowser-tab::after, .tabbrowser-tab::before {
@@ -83,7 +82,7 @@ tab[selected="true"] .tab-background {
 }
 
 .tabbrowser-tab > .tab-stack > .tab-background {
-	border-radius: 50px !important;
+	border-radius: 15px !important; /* rounded tabs */
 }
 .tabbrowser-tab > .tab-stack > .tab-background:not([selected="true"]) {
 	transition: all 0.3s ease !important;
@@ -142,13 +141,13 @@ toolbar#navbar toolbarbutton #fxa-avatar-image {
 	fill: rgba(var(--grey), 1) !important;
 }
 #urlbar > #urlbar-background {
-	border-radius: 10px !important;
+	border-radius: 30px !important; /* rouned url bar */
 	border: 1 !important;
 	background-color: rgba(var(--accent-color), 1) !important;
 }
 
 #urlbar-background, .urlbarView-body-inner {
-	border-color: var(--yellow) !important;
+	border-color: rgba(var(--purple), 1) !important;
 }
 
 #urlbar:not([focused="true"]) > #urlbar-background,
@@ -169,11 +168,41 @@ toolbar#navbar toolbarbutton #fxa-avatar-image {
 }
 
 #urlbar {
-	color: rgba(var(--cyan), 1) !important;
+	color: rgba(var(--yellow), 1) !important;
 }
+
 .urlbarView-url {
-    color: rgba(var(--accent-color), 1) !important;
+    color: rgba(var(--cyan), 1) !important;
 }
+.urlbarView-action{
+	color: rgba(var(--pink), 1) !important;
+}
+
+/* get rid of annoying blue highlights in url bar */
+#urlbar{
+  border-color: var(--lwt-toolbar-field-border-color, rgba(240,90,50,1)) !important;
+  --autocomplete-popup-highlight-background: rgba(80,73,69,1);
+}
+
+#urlbar-search-mode-indicator
+{
+	background-color: rgba(var(--dark-color), 1) !important;
+	border-color: rgba(var(--yellow), 1) !important;
+	color: rgba(var(--yellow), 1) !important;
+}
+
+#urlbar-search-mode-indicator-close{
+	background-color: rgba(var(--dark-color), 1) !important;
+	border-color: rgba(var(--yellow), 1) !important;
+	color: rgba(var(--yellow), 1) !important;
+}
+
+#urlbar-search-mode-indicator-title{
+	background-color: rgba(var(--dark-color), 1) !important;
+	border-color: rgba(var(--yellow), 1) !important;
+	color: rgba(var(--yellow), 1) !important;
+}
+
 
 
 /*================== SIDEBAR ==================*/
