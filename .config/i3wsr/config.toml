@@ -5,6 +5,7 @@ seperator = " | "
 "firefox" = "Firefox"
 "discord" = "Discord"
 "ptolemy-vergil-VergilApplication" = "Ptolemy 2"
+"DB Browser for SQLite" = "SQLite Browser"
 
 [options]
 remove_duplicates = true

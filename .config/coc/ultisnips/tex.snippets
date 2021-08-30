@@ -269,3 +269,45 @@ endsnippet
 snippet eeq "epsilon equilibrium" w
 $\mathcal{E}$ equilibrium
 endsnippet
+
+snippet schema "create a fuzz schema" b
+\begin{schema}{$1}
+	$2
+${3:\where}
+	$0
+\end{schema}
+endsnippet
+
+snippet fuzz "Setup fuzz Document" b
+\documentclass[12pt]{report}
+\usepackage{fuzz}
+% remove numbers from sections
+\setcounter{secnumdepth}{0}
+
+\author{Fergus Molloy}
+\date{\today}
+\title{$1}
+\begin{document}
+\sffamily
+\maketitle
+$0
+\end{document}
+endsnippet
+
+snippet zed "Create zed environment" b
+\begin{zed}
+	$0
+\end{zed}
+endsnippet
+
+snippet axiome "Create axiome environment" b
+\begin{axdef}
+	$0
+\end{axdef}
+endsnippet
+
+snippet syntax "Create syntax environment" b
+\begin{syntax}
+	$0
+\end{syntax}
+endsnippet

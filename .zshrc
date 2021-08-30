@@ -17,6 +17,7 @@ export EDITOR="/usr/bin/nvim"
 # Fixes cursor glitch in vim
 export TERMINAL="alacritty"
 export TERM="alacritty"
+export TEXMFLOCAL="~/.texmf"
 # For easy cloning of my repos
 export GIT="git@github.com:Fergus-Molloy"
 # For argos3
@@ -36,16 +37,19 @@ export PATH="/home/fergus/.gem/ruby/2.7.0/gems/bundler-2.1.4/exe:$PATH"
 export PATH="/home/fergus/.cabal/bin:$PATH"
 export PATH="/home/fergus/.cargo/bin:$PATH"
 export PATH="/home/fergus/.local/bin:$PATH"
+export PATH="/home/fergus/.dotnet/tools:$PATH"
 
 #======================================================================#
 # Theme                                                                #
 #======================================================================#
 eval "$(starship init zsh)"
-neofetch
 
 #======================================================================#
 # Plugins                                                              #
 #======================================================================#
+# better git
+source ~/bin/git.sh
+# auto suggestions
 source ~/.cache/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 # better completion
 source ~/.cache/zsh/compinstall
@@ -64,8 +68,8 @@ alias v=nvim
 alias sv="sudoedit "
 alias rm="remove-git"
 alias cp="cp -r"
-alias cd=z
-alias cdi=zi
+#alias cd=z
+#alias cdi=zi
 alias sudo="sudo "
 alias mkdir="mkdir -p"
 alias grep=rg
@@ -79,7 +83,12 @@ alias mountj="ecryptfs-mount-private"
 alias umountj="ecryptfs-umount-private"
 alias copy="xclip -selection clipboard"
 alias c="cargo"
-alias cb="clipcatctl"
+alias clion="sh /home/fergus/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/203.7148.70/bin/clion.sh"
+alias cat=bat
+alias man=batman
+alias tlmgr='/usr/share/texmf-dist/scripts/texlive/tlmgr.pl --usermode'
+alias cr="cargo run"
+#alias cb="clipcatctl"
 
 # better ls
 #--no-permissions --no-user
@@ -96,6 +105,7 @@ alias gam="git commit -am"
 alias gcm="git commit -m"
 alias gp="git push"
 alias gpo="git push origin"
+alias gb="git branch"
 
 
 #======================================================================#
@@ -116,12 +126,22 @@ cn(){
         cd -P -- "${@: -1}"
 }
 
-# Clipcat
-if type clipcat-menu >/dev/null 2>&1; then
-    alias clipedit=' clipcat-menu --finder=builtin edit'
-    alias clipdel=' clipcat-menu --finder=builtin remove'
-
-    bindkey -s '^[' "^Q clipcat-menu --finder=builtin insert ^J"
-    bindkey -s '^]' "^Q clipcat-menu --finder=builtin remove ^J"
+if [ -n "$DESKTOP_SESSION" ];then
+    eval $(gnome-keyring-daemon --start)
+    export SSH_AUTH_SOCK
 fi
 
+# Clipcat
+#if type clipcat-menu >/dev/null 2>&1; then
+#    alias clipedit=' clipcat-menu --finder=builtin edit'
+#    alias clipdel=' clipcat-menu --finder=builtin remove'
+#
+#    bindkey -s '^[' "^Q clipcat-menu --finder=builtin insert ^J"
+#    bindkey -s '^]' "^Q clipcat-menu --finder=builtin remove ^J"
+#fi
+
+
+#======================================================================#
+# Startup                                                              #
+#======================================================================#
+neofetch

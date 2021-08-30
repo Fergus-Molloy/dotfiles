@@ -20,6 +20,8 @@ Plug 'machakann/vim-highlightedyank'
 Plug 'andymass/vim-matchup'
 Plug 'kamykn/popup-menu.nvim'
 Plug 'junegunn/vim-emoji'
+Plug 'preservim/nerdtree'
+
 
 " themes
 Plug 'arcticicestudio/nord-vim'
@@ -36,11 +38,17 @@ Plug 'junegunn/fzf.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Syntactic language support
+Plug 'OmniSharp/omnisharp-vim'
 Plug 'cespare/vim-toml'
 Plug 'stephpy/vim-yaml'
+Plug 'elzr/vim-json'
 Plug 'rust-lang/rust.vim'
 Plug 'godlygeek/tabular'
 Plug 'lervag/vimtex'
+
+" Cpp specific support
+Plug 'rhysd/vim-clang-format'
+Plug 'vim-syntastic/syntastic'
 call plug#end()
 
 if has('nvim')
@@ -49,7 +57,13 @@ if has('nvim')
     noremap <C-q> :confirm qall<CR>
 end
 
-let scheme = 'dracula'
+set guifont=Fira\ Code:10pt
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" COLOUR SCHEME                                                        "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let scheme = 'gruvbox'
 " Configure colorscheme
 set background=dark
 
@@ -68,7 +82,6 @@ elseif scheme == 'dracula'
     let g:dracula_bold = 1
     let g:dracula_italic = 1
     let g:dracula_colorterm = 1
-    set background=dark
     colorscheme dracula
 else
     colorscheme base16-default-dark
@@ -87,6 +100,9 @@ endif
 " automatically change to gruv box when latex or markdown file is entered
 "au BufRead *.tex,*.md call SetGruvbox()
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" TEXT FORMATTING                                                       "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 syntax on
 " Line numbers
 " current line has actual line number
@@ -104,24 +120,26 @@ set nowrap
 " If we are wrapping then wrap sensibly
 set lbr
 
-" Wrap at 150 characters
-set tw=150
+" Wrap at 115 characters
+set tw=115
 
-let t:wrapped = 0
-function ToggleWrap()
-    if t:wrapped == 0
-        set wrap
-        let t:wrapped =1
-    else
-        set nowrap
-        let t:wrapped =0
-    endif
-endfunction
 " Just in case I want wrapping
-nnoremap <leader>l : call ToggleWrap()<CR>
+nnoremap <leader>l :set wrap!<CR>
+
+" Open a terminal split
+nnoremap <leader>te :split<CR>:term<CR>:resize 10<CR>GA
 
 
-" Plugin settings -----------------------------------------------
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" PLUGIN SETTINGS                                                       "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Omnisharp
+let g:OmniSharp_server_use_mono = 1
+let g:OmniSharp_selector_ui = 'fzf'
+let g:OmniSharp_selector_findusages = 'fzf'
+let g:OmniSharp_highlighting = 1
+
 
 " Configure emojis 
 set completefunc=emoji#complete
@@ -172,7 +190,9 @@ let g:latex_indent_enabled = 1
 let g:latex_fold_envs = 0
 let g:latex_fold_sections = []
 
-" Configure spelling ------------------------------------------------------------
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" SPELLING SETTINGS                                                     "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " disable vim's spell checker
 set nospell 
 set spelllang=en_gb
@@ -232,6 +252,10 @@ let g:spelunker_complex_or_compound_word_group = 'SpelunkerComplexOrCompoundWord
 highlight SpelunkerSpellBad cterm=underline ctermfg=247 gui=underline guifg=#9e9e9e
 highlight SpelunkerComplexOrCompoundWord cterm=underline ctermfg=NONE gui=underline guifg=NONE
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" KEYBIND SETTINGS                                                      "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 " Type replacement
 nmap <leader>sc Zc
 nmap <leader>SC ZC
@@ -251,6 +275,10 @@ nmap <leader>sp ZP
 " Previous spelling error
 nmap <leader>sn ZN
 
+" NERDTree binds
+nnoremap <leader>n :NERDTreeFocus<CR>
+nnoremap <leader>t :NERDTreeToggle<CR>
+nnoremap <leader>y :NERDTreeFind<CR>
 
 " Open hotkeys
 map <C-p> :Files<CR>
@@ -274,9 +302,10 @@ set cmdheight=1
 " You will have bad experience for diagnostic messages when it's default 4000.
 set updatetime=300
 
-" =============================================================================
-" # Editor settings
-" =============================================================================
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" EDITOR SETTINGS                                                       "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 filetype plugin indent on
 set autoindent
 set timeoutlen=300 " http://stackoverflow.co/questions/2158516/delay-before-o-opens-a-new-line
@@ -357,6 +386,15 @@ nnoremap <C-f> :sus<cr>
 map H ^
 map L $
 
+" don't cut when using x
+nnoremap x "_x
+vnoremap x "_x
+
+nnoremap <leader>v :CocCommand rust-analyzer.openCargoToml<cr>
+
+map <leader>f :py3f /usr/share/clang/clang-format.py<cr>
+imap <C-K> <c-o>:py3f /usr/share/clang/clang-format.py<cr>
+
 " Neat X clipboard integration
 " ,p will paste clipboard into buffer
 " ,c will copy entire buffer into clipboard
@@ -428,7 +466,10 @@ noremap <leader>m ct_
 " I can type :help on my own, thanks.
 map <F1> <Esc>
 imap <F1> <Esc>
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" COC SETTINGS                                                          "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Snippet "next" keybind
 let g:coc_snippet_next = '<tab>'
 set sessionoptions+=globals
@@ -552,7 +593,8 @@ let g:Tex_IgnoredWarnings =
             \'Missing number, treated as zero.'."\n".
             \'There were undefined references'."\n".
             \'Citation %.%# undefined'."\n".
-            \'Double space found.'."\n"
+            \'Double space found.'."\n".
+            \'Command terminated with space.'."\n"
 let g:Tex_IgnoreLevel = 8
 let g:vimtex_quickfix_open_on_warning = 0
 "let g:vimtex_quickfix_autoclose_after_keystrokes=1
@@ -560,6 +602,12 @@ let g:vimtex_quickfix_open_on_warning = 0
 " =============================================================================
 " # Autocommands
 " =============================================================================
+
+function! Formatonsave()
+  let l:formatdiff = 1
+  py3f /usr/share/clang/clang-format.py
+endfunction
+autocmd BufWritePre *.h,*.cc,*.cpp call Formatonsave()
 
 " Prevent accidental writes to buffers that shouldn't be edited
 autocmd BufRead *.orig set readonly
@@ -585,7 +633,15 @@ autocmd BufRead *.lds set filetype=ld
 autocmd BufRead *.tex set filetype=tex
 autocmd BufRead *.trm set filetype=c
 autocmd BufRead *.xlsx.axlsx set filetype=ruby
+autocmd BufRead MakeFile set filetype=make
 
+" Exit Vim if NERDTree is the only window left.
+autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() |
+    \ quit | endif
+
+" Start NERDTree when Vim is started without file arguments.
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists('s:std_in') | NERDTree | endif
 
 au FileType python let b:coc_root_patterns = ['.git', '.env']
 au FileType rust let b:coc_root_patterns = ['.git', '.toml']

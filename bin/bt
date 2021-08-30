@@ -1,0 +1,13 @@
+#!/bin/bash
+
+if [[ $1 -eq "connect" ]]
+then
+    echo "power on" | bluetoothctl
+    echo "agent on" | bluetoothctl
+    echo "connect DC:2C:26:FF:1C:D3" | bluetoothctl
+elif [[ $1 -eq "disconnect" ]]
+then
+    echo "disconnect DC:2C:26:FF:1C:D3\npower off" | bluetoothctl
+else
+    echo "Command not recognised"
+fi

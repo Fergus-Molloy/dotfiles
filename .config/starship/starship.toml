@@ -18,7 +18,7 @@ style = "bold yellow"
 threshold = 100
 style = "bold green"
 
-[[Directory]]
+[[directory]]
 truncate_to_repo = true
 
 [perl]

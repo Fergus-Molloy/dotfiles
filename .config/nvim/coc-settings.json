@@ -1,9 +1,9 @@
 {
 "languageserver": {
     "ccls": {
-      "command": "ccls",
+      "command": "clangd",
       "filetypes": ["c", "cpp", "objc", "objcpp"],
-      "rootPatterns": [".ccls", "compile_commands.json", ".git/", ".hg/"],
+      "rootPatterns": ["compile_flags.txt", "compile_commands.json", ".git/", ".hg/"],
       "initializationOptions": {
          "cache": {
            "directory": "/tmp/ccls"
@@ -11,6 +11,10 @@
        }
     }
   },
-"coc.preferences.formatOnSaveFiletypes": ["rust"]
+    "coc.preferences.formatOnSaveFiletypes": ["rust"],
+    "rust-analyzer.updates.channel": "nightly",
+    "rust-analyzer.completion.addCallParenthesis":true,
+    "omnisharp.version": "v1.37.3",
+    "omnisharp.trace.server": "information",
+    "omnisharp.debug.server": true
 }
-
