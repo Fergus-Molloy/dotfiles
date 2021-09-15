@@ -4,4 +4,4 @@ export SSH_AUTH_SOCK
 xset s off
 xset s noblank
 setxkbmap gb
-exec i3
+exec leftwm
