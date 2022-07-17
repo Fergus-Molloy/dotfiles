@@ -38,11 +38,26 @@ export PATH="/home/fergus/.cabal/bin:$PATH"
 export PATH="/home/fergus/.cargo/bin:$PATH"
 export PATH="/home/fergus/.local/bin:$PATH"
 export PATH="/home/fergus/.dotnet/tools:$PATH"
+export PATH="/home/fergus/.rustup/toolchains/<toolchain>/lib/rustlib/<target-triple>/bin:$PATH"
 
 #======================================================================#
 # Theme                                                                #
 #======================================================================#
 eval "$(starship init zsh)"
+
+
+#======================================================================#
+# Completion                                                           #
+#======================================================================#
+
+_dotnet_zsh_complete()
+{
+  local completions=("$(dotnet complete "$words")")
+
+  reply=( "${(ps:\n:)completions}" )
+}
+
+compctl -K _dotnet_zsh_complete dotnet
 
 #======================================================================#
 # Plugins                                                              #
@@ -75,7 +90,6 @@ alias mkdir="mkdir -p"
 alias grep=rg
 alias top=bpytop
 alias :q="exit"
-alias pik=pikaur
 alias volume=pulsemixer
 alias latexmk="latexmk -lualatex -synctex=1 -shell-escape"
 alias reflector-update="reflector --verbose --latest 200 --protocol http --protocol https --sort rate --save /etc/pacman.d/mirrorlist"
@@ -88,6 +102,7 @@ alias cat=bat
 alias man=batman
 alias tlmgr='/usr/share/texmf-dist/scripts/texlive/tlmgr.pl --usermode'
 alias cr="cargo run"
+alias ghc="ghc -dynamic"
 #alias cb="clipcatctl"
 
 # better ls

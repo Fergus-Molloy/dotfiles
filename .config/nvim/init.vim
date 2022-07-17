@@ -279,6 +279,7 @@ nmap <leader>sn ZN
 nnoremap <leader>n :NERDTreeFocus<CR>
 nnoremap <leader>t :NERDTreeToggle<CR>
 nnoremap <leader>y :NERDTreeFind<CR>
+let g:NERDTreeWinSize=40
 
 " Open hotkeys
 map <C-p> :Files<CR>
@@ -653,4 +654,8 @@ au FileType rust let b:coc_root_patterns = ['.git', '.toml']
 if has('nvim')
 	runtime! plugin/python_setup.vim
 endif
+
+let g:LanguageClient_serverCommands = {
+\ 'rust': ['rust-analyzer'],
+\ }
 

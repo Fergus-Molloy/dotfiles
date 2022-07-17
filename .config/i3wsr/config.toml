@@ -4,6 +4,7 @@ seperator = " | "
 [aliases]
 "firefox" = "Firefox"
 "discord" = "Discord"
+"org.wezfurlong.wezterm" = "Wezterm"
 "ptolemy-vergil-VergilApplication" = "Ptolemy 2"
 "DB Browser for SQLite" = "SQLite Browser"
 
