@@ -62,7 +62,7 @@ export PATH="/home/fergus/.cargo/bin:$PATH"
 #======================================================================#
 # Theme                                                                #
 #======================================================================#
-export STARSHIP_CONFIG="~/.config/starship/starship.toml"
+export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
 command -v starship > /dev/null && eval "$(starship init zsh)"
 
 #======================================================================#
