@@ -1,0 +1,53 @@
+{
+    "workbench.colorTheme": "Gruvbox Dark Medium",
+    "workbench.iconTheme": "material-icon-theme",
+    "editor.fontFamily": "'Fira Code'",
+    "evenBetterToml.formatter.allowedBlankLines": 1,
+    "evenBetterToml.formatter.columnWidth": 80,
+    "evenBetterToml.formatter.arrayAutoCollapse": true,
+    "evenBetterToml.formatter.arrayAutoExpand": true,
+    "evenBetterToml.formatter.arrayTrailingComma": true,
+    "gitlens.showWelcomeOnInstall": false,
+    "rust-analyzer.checkOnSave.command": "clippy",
+    "rust-analyzer.hover.actions.references.enable": true,
+    "rust-analyzer.imports.granularity.enforce": true,
+    "rust-analyzer.imports.granularity.group": "module",
+    "rust-analyzer.inlayHints.closureReturnTypeHints.enable": "with_block",
+    "rust-analyzer.lens.references.adt.enable": true,
+    "rust-analyzer.lens.references.method.enable": true,
+    "rust-analyzer.lens.references.trait.enable": true,
+    "editor.fontLigatures": true,
+    "terminal.integrated.fontFamily": "'Fira Code', 'FiraCode Nerd Font'",
+    "vim.normalModeKeyBindingsNonRecursive": [
+     {
+        "before": ["q"],
+        "after": ["h"]
+     },
+     {
+        "before": ["x"],
+        "after": ["l"],
+     }
+    ],
+    "vim.visualModeKeyBindingsNonRecursive": [
+     {
+        "before": ["q"],
+        "after": ["h"]
+     },
+     {
+        "before": ["x"],
+        "after": ["l"],
+     }
+    ],
+    "vim.operatorPendingModeKeyBindingsNonRecursive": [
+     {
+        "before": ["q"],
+        "after": ["h"]
+     },
+     {
+        "before": ["x"],
+        "after": ["l"],
+     }
+   ],
+   "explorer.confirmDragAndDrop": false,
+   "explorer.confirmDelete": false,
+}
