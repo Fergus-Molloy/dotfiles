@@ -1,0 +1,21 @@
+[credential "https://github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
+[user]
+	email = fergus@molloy.xyz
+  name = Fergus Molloy
+  signingkey = CD9EC74711ACC164
+[init]
+  defaultBranch = main
+[checkout]
+  defaultRemote = origin
+  guess = true
+[branch]
+  autoSetupRebase = always
+[core]
+  editor = "neovide --nofork"
+[commit]
+  gpgsign = true

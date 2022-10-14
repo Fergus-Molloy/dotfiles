@@ -1,5 +1,0 @@
-configuration {
-	terminal: "alacritty";
-}
-@import "/home/fergus/.config/rofi/themes/sidetab.rasi"
-
