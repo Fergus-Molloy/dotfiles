@@ -1,11 +1,14 @@
 # dotfiles
 
-repo for storing my arch linux dotfiles
+repo for storing my dotfiles. Utilises GNU stow for managing these files from a central location.
 
-after initial install and network configuration get all programs with
+To use simply ensure the config file you want to use doesn't already exist and then run `stow <module_name>` to automatically setup a symlink to this repo.
 
-```bash
-curl https://raw.githubusercontent.com/Fergus-Molloy/dotfiles/master/bin/download_programs | bash
-```
+To add a new config to this repo ensure the folder structure is correct and then move the config into this repo. You can then use stow to symlink to the original location.
 
-Once everything installed you *should* be good to download all the dotfiles using `yadm https://github.com/Fergus-Molloy/dotfiles.git` (it will overwrite any duplicate files)
+The folder structure should look as follows
+
+`dotfiles/<module_name>/path/from/home/to/file/config`
+
+By running `stow <module_name>` from the dotfiles directory the file `config` would end up at `~/path/from/home/to/file/config`
+
