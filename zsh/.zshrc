@@ -13,17 +13,28 @@ ENABLE_CORRECTION="true"
 #======================================================================#
 # Auto loads                                                           #
 #======================================================================#
+# better tab completion (case insensitve always)
 autoload -Uz compinit && compinit
 zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}'
 
+# if node version manager exists add it's required script
 [ -f /usr/share/nvm/init-nvm.sh ] && source /usr/share/nvm/init-nvm.sh
 
+# if fzf exists add it's autocompletion
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+# if terraform exists add it's autocompletion
 command -v terraform > /dev/null && autoload -U +X bashcompinit && bashcompinit
 command -v terraform > /dev/null && complete -o nospace -C /usr/bin/terraform terraform
 
+# load work scripts
 [ -f "$HOME/work.zsh" ] && source "$HOME/work.zsh"
+
+# setup zsh hist file
+if [[ ! -e ~/.cache/zsh/histfile ]]; then
+  mkdir -p ~/.cache/zsh
+  touch ~/.cache/zsh/histfile
+fi
 
 #======================================================================#
 # Exports                                                              #
