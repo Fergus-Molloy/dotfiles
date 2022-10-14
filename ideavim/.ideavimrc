@@ -1,0 +1,83 @@
+let mapleader = " "
+
+" =============================================================================
+" # PLUGINS
+" =============================================================================
+Plug 'justinmk/vim-sneak'
+Plug 'tpope/vim-surround'
+Plug 'vim-scripts/argtextobj.vim'
+Plug 'machakann/vim-highlightedyank'
+
+let g:argtextobj_pairs="[:],(:),<:>"
+
+syntax on
+" Line numbers
+" current line has actual line number
+" other lines are relative
+set nu rnu
+" Highlight matching brackets
+set showmatch
+
+" Easier to see what line I'm on
+set cursorline
+
+set scrolloff=5
+set noshowmode
+set hidden
+set nojoinspaces
+set printencoding=utf-8
+set signcolumn=yes
+
+set incsearch
+set ignorecase
+set smartcase
+set gdefault
+
+" Search results centered please
+nnoremap <silent> n nzz
+nnoremap <silent> N Nzz
+nnoremap <silent> * *zz
+nnoremap <silent> # #zz
+nnoremap <silent> g* g*zz
+
+vnoremap <C-h> :nohlsearch<cr>
+nnoremap <C-h> :nohlsearch<cr>
+
+nnoremap <leader>w :w<CR>
+
+nnoremap q h
+nnoremap x l
+vnoremap q h
+vnoremap x l
+onoremap q h
+onoremap x l
+
+" Move by line
+nnoremap j gj
+nnoremap k gk
+
+nnoremap l q
+
+nnoremap Q ^
+nnoremap X $
+
+noremap ; :
+
+
+map gd <Action>(GotoDeclaration)
+map gi <Action>(GotoImplementation)
+map gs <Action>(GotoSuperMethod)
+map gr <Action>(FindUsages)
+
+map rn <Action>(RenameElement)
+
+map <leader>c <Action>(CommentByLineComment)
+
+map <leader><space> <Action>(ShowIntentionActions)
+map <leader>a <Action>(GotoAction)
+
+map <leader>fe <Action>(SearchEverywhere)
+map <leader>ff <Action>(FindInPath)
+map <leader>fi <Action>(FileStructurePopup)
+
+map == <Action>(ReformatCode)
