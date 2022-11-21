@@ -149,26 +149,11 @@ bindsym Mod1+r mode "resize"
 # Start of User Config
 #######################################
 
-#Set opacity
-exec_always --no-startup-id $HOME/.config/compton/launch.sh
-
 #Start Polybar
-exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+exec_always --no-startup-id systemctl --user restart polybar
 
 #Set background image
 exec_always --no-startup-id feh --bg-fill $HOME/Pictures/bg.png
-
-#Apply undervolt
-exec_always --no-startup-id intel-undervolt apply
-
-#Run i3 workspace renamer
-exec_always --no-startup-id /usr/bin/i3wsr --config ~/.config/i3wsr/config.toml
-
-# start clipcatd
-exec_always --no-startup-id clipcatd
-
-bindsym Mod1+bracketleft exec "clipcat-menu -f rofi insert"
-bindsym Mod1+bracketright exec "clipcat-menu -f rofi remove"
 
 #Open flameshot
 exec --no-startup-id flameshot
@@ -177,13 +162,10 @@ exec --no-startup-id flameshot
 assign [class="discord"] $ws3
 assign [class="spotify"] $ws9
 assign [class="GitKraken"] $ws10
-assign [class="argos3"] $ws2
-#assign [class="ptolemy-vergil-VergilApplication"] $ws9
 
 #Start up applictions
-exec --no-startup-id discord
-exec --no-startup-id gitkraken
-exec --no-startup-id wezterm
+#exec --no-startup-id discord
+exec --no-startup-id kitty
 
 # Change borders
 for_window [class="^.*"] border pixel 5
@@ -203,8 +185,8 @@ client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
 client.background       #ffffff
 
 # Setup gaps
-gaps inner 20
-gaps outer 5
+gaps inner 15
+gaps outer 15
 
 # Setup mod key
 set $mod Alt_L
@@ -215,10 +197,8 @@ bindsym --release Mod1+i exec i3lock-fancy -p
 bindsym --release Mod1+Shift+s exec flameshot gui
 bindsym --release Mod1+c exec rofi -show window
 bindsym --release Mod1+s exec rofi -show ssh
-bindsym --release Mod1+d exec "rofi -show run -run-shell-command '{terminal} -e \\" {cmd}; read -n 1 -s \\"'"
-bindsym Mod1+Return exec wezterm
-bindsym XF86MonBrightnessUp exec /home/fergus/bin/brightness -i 0.1
-bindsym XF86MonBrightnessDown exec /home/fergus/bin/brightness -d 0.1
+bindsym --release Mod1+d exec dmenu
+bindsym Mod1+Return exec kitty
 
 
 

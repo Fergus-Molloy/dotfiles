@@ -18,4 +18,4 @@
 [core]
   editor = "neovide --nofork"
 [commit]
-  gpgsign = true
+  gpgsign = false

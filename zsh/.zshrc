@@ -42,8 +42,8 @@ fi
 export SHELL="/usr/bin/zsh"
 export EDITOR="/usr/bin/nvim"
 # Fixes cursor glitch in vim
-export TERMINAL="wezterm"
-export TERM="wezterm"
+export TERMINAL="kitty"
+export TERM="kitty"
 # For GPG
 export GPG_TTY=$(tty)
 
@@ -52,6 +52,9 @@ export FZF_DEFAULT_OPTIONS="-i --border=rounded --layout=reverse --prompt='-> ' 
 export FZF_DEFAULT_COMMAND="fd . --strip-cwd-prefix --color never"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND="fd -t d . $HOME"
+
+# For dir env in nixos
+eval "$(direnv hook zsh)"
 
 #======================================================================#
 # Path                                                                 #
@@ -62,7 +65,7 @@ export PATH="/home/fergus/.cargo/bin:$PATH"
 #======================================================================#
 # Theme                                                                #
 #======================================================================#
-export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
+export STARSHIP_CONFIG="$HOME/.config/starship.toml"
 command -v starship > /dev/null && eval "$(starship init zsh)"
 
 #======================================================================#
