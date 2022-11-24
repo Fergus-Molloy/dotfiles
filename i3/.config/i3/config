@@ -150,13 +150,15 @@ bindsym Mod1+r mode "resize"
 #######################################
 
 #Start Polybar
-exec_always --no-startup-id systemctl --user restart polybar
+exec_always --no-startup-id ~/.config/polybar/launch.sh
 
 #Set background image
 exec_always --no-startup-id feh --bg-fill $HOME/Pictures/bg.png
 
 #Open flameshot
 exec --no-startup-id flameshot
+
+exec --no-startup-id setxkbmap gb
 
 #assign zathura, discord and spotify to workspaces
 assign [class="discord"] $ws3
@@ -197,7 +199,7 @@ bindsym --release Mod1+i exec i3lock-fancy -p
 bindsym --release Mod1+Shift+s exec flameshot gui
 bindsym --release Mod1+c exec rofi -show window
 bindsym --release Mod1+s exec rofi -show ssh
-bindsym --release Mod1+d exec dmenu
+bindsym --release Mod1+d exec rofi -show run
 bindsym Mod1+Return exec kitty
 
 

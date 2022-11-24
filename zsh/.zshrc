@@ -53,9 +53,6 @@ export FZF_DEFAULT_COMMAND="fd . --strip-cwd-prefix --color never"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND="fd -t d . $HOME"
 
-# For dir env in nixos
-eval "$(direnv hook zsh)"
-
 #======================================================================#
 # Path                                                                 #
 #======================================================================#
@@ -67,6 +64,9 @@ export PATH="/home/fergus/.cargo/bin:$PATH"
 #======================================================================#
 export STARSHIP_CONFIG="$HOME/.config/starship.toml"
 command -v starship > /dev/null && eval "$(starship init zsh)"
+
+# load node version manager (can be slow)
+# command -v nvm > /dev/null && source /usr/share/nvm/init-nvm.sh
 
 #======================================================================#
 # Aliases                                                              #
