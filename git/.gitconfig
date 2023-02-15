@@ -19,3 +19,5 @@
   editor = "neovide --nofork"
 [commit]
   gpgsign = false
+[push]
+	autoSetupRemote = true

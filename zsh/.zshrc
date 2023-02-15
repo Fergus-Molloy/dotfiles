@@ -18,7 +18,7 @@ autoload -Uz compinit && compinit
 zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}'
 
 # if node version manager exists add it's required script
-[ -f /usr/share/nvm/init-nvm.sh ] && source /usr/share/nvm/init-nvm.sh
+#[ -f /usr/share/nvm/init-nvm.sh ] && source /usr/share/nvm/init-nvm.sh
 
 # if fzf exists add it's autocompletion
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -36,6 +36,12 @@ if [[ ! -e ~/.cache/zsh/histfile ]]; then
   touch ~/.cache/zsh/histfile
 fi
 
+# setup node version manager
+#[ -z "$NVM_DIR" ] && export NVM_DIR="$HOME/.nvm"
+#source /usr/share/nvm/nvm.sh
+#source /usr/share/nvm/bash_completion
+#source /usr/share/nvm/install-nvm-exec
+
 #======================================================================#
 # Exports                                                              #
 #======================================================================#
@@ -46,6 +52,7 @@ export TERMINAL="kitty"
 export TERM="kitty"
 # For GPG
 export GPG_TTY=$(tty)
+export CHROME_EXECUTABLE=/usr/bin/google-chrome-stable
 
 # For fzf
 export FZF_DEFAULT_OPTIONS="-i --border=rounded --layout=reverse --prompt='-> ' --marker=* --info=inline --preview='bat fn {}'"
@@ -58,6 +65,7 @@ export FZF_ALT_C_COMMAND="fd -t d . $HOME"
 #======================================================================#
 export PATH="/home/fergus/bin:$PATH"
 export PATH="/home/fergus/.cargo/bin:$PATH"
+export PATH="/home/fergus/flutter/bin:$PATH"
 
 #======================================================================#
 # Theme                                                                #
