@@ -37,10 +37,12 @@ if [[ ! -e ~/.cache/zsh/histfile ]]; then
 fi
 
 # setup node version manager
-#[ -z "$NVM_DIR" ] && export NVM_DIR="$HOME/.nvm"
-#source /usr/share/nvm/nvm.sh
-#source /usr/share/nvm/bash_completion
-#source /usr/share/nvm/install-nvm-exec
+[ -z "$NVM_DIR" ] && export NVM_DIR="$HOME/.nvm"
+if [[ -f /usr/share/nvm/nvm.sh ]]; then
+  source /usr/share/nvm/nvm.sh
+  source /usr/share/nvm/bash_completion
+  source /usr/share/nvm/install-nvm-exec
+fi
 
 #======================================================================#
 # Exports                                                              #
@@ -98,7 +100,7 @@ alias sv="sudoedit "
 alias vim="nvim"
 # better tools
 alias grep=rg
-alias top=bpytop
+alias top=btop
 alias cat=bat
 alias man=batman
 # better ls
@@ -114,6 +116,9 @@ alias gp="git pull"
 alias gpu="git push"
 alias gs="git switch"
 alias gsc="git switch -c"
+# docker
+alias dcu="docker compose up --build"
+alias dcd="docker compose down"
 
 
 #======================================================================#
